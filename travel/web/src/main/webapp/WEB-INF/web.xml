@@ -11,6 +11,14 @@
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>com.weiminw.web.services</param-value>
         </init-param>
+        <init-param>
+            <param-name> jersey.config.server.mediaTypeMappings</param-name>
+            <param-value>
+            json:application/json;charset=utf-8, 
+            xml:application/xml,
+            png:image/png
+            </param-value>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
   <servlet-mapping>
