@@ -1,6 +1,7 @@
 package com.weiminw.travel.persistence.impls;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -24,5 +25,17 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 		namedQuery.setMaxResults(10);
 		return namedQuery.getResultList();
 	}
+	
+	public List<T> getPersistenceObjects(String query,Map<String,?> parameters) {
+		EntityManager manager = factory.createEntityManager();
+		Query namedQuery= manager.createNamedQuery(query);
+		namedQuery.setMaxResults(10);
+		for(Map.Entry<String,?> entry:parameters.entrySet()){
+			namedQuery.setParameter(entry.getKey(), entry.getValue());
+		}
+		return namedQuery.getResultList();
+	}
+	
+	
 	
 }

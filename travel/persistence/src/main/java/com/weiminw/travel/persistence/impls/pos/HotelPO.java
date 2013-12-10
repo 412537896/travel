@@ -12,7 +12,13 @@ import com.weiminw.travel.interfaces.IHotel;
  *
  */
 @Entity(name="hotel")
-@NamedQuery(name="HotelPO.findAll",query="select H from hotel H ")
+@NamedQueries(value = {
+		@NamedQuery(name="HotelPO.findAll",query="select H from hotel H "),
+		@NamedQuery(name="HotelPO.findPOI",query="select H from hotel H where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat "),
+		
+		
+		
+})
 public final class HotelPO implements IHotel {
 	private long id;
 	private String name;
