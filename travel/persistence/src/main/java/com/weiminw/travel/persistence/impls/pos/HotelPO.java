@@ -5,30 +5,34 @@ import java.lang.String;
 import javax.persistence.*;
 
 import com.google.common.base.Objects;
+import com.weiminw.travel.interfaces.ICity;
 import com.weiminw.travel.interfaces.IHotel;
+import com.weiminw.travel.interfaces.IProvince;
 
 /**
  * Entity implementation class for Entity: HotelPO
  *
  */
-@Entity(name="hotel")
+@Entity
+@Table(name="hotel")
 @NamedQueries(value = {
-		@NamedQuery(name="HotelPO.findAll",query="select H from hotel H "),
-		@NamedQuery(name="HotelPO.findPOI",query="select H from hotel H where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat "),
-		
-		
-		
+		@NamedQuery(name="HotelPO.findAll",query="select H from HotelPO H "),
+		@NamedQuery(name="HotelPO.findPOI",query="select H from HotelPO H where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat "),
 })
 public final class HotelPO implements IHotel {
 	private long id;
 	private String name;
 	private String address;
 	private String description;
-	private int province ;
-	private int city ;
+	private int provinceCode ;
+	private int cityCode ;
 	private double longtitude ;
 	private double latitude;
 	private String telephone ;
+	@Transient
+	private ICity city;
+	@Transient
+	private IProvince province;
 	private static final long serialVersionUID = 1L;
 	
 
@@ -67,18 +71,18 @@ public final class HotelPO implements IHotel {
 		this.description = description;
 	}
 	@Column(name="province")  
-	public int getProvince() {
-		return province;
+	public int getProvinceCode() {
+		return provinceCode;
 	}
-	public void setProvince(int province) {
-		this.province = province;
+	public void setProvinceCode(int provinceCode) {
+		this.provinceCode = provinceCode;
 	}
 	@Column(name="city")  
-	public int getCity() {
-		return city;
+	public int getCityCode() {
+		return cityCode;
 	}
-	public void setCity(int city) {
-		this.city = city;
+	public void setCityCode(int cityCode) {
+		this.cityCode = cityCode;
 	}
 	@Column(name="longtitude")  
 	public double getLongtitude() {
@@ -107,12 +111,22 @@ public final class HotelPO implements IHotel {
 				.add("name", name)
 				.add("address", address)
 				.add("description", description)
-				.add("province", province)
+				.add("province", provinceCode)
 				.add("longtitude", longtitude)
 				.add("latitude", latitude)
 				.add("telephone", telephone)
 				.toString();
 
+	}
+	@Override
+	public IProvince getProvince() {
+		// TODO Auto-generated method stub
+		return this.province;
+	}
+	@Override
+	public ICity getCity() {
+		// TODO Auto-generated method stub
+		return this.city;
 	};
    
 }

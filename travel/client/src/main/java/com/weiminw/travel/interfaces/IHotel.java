@@ -10,6 +10,16 @@ public interface IHotel extends Serializable {
 	public String getName();
 
 	public String getAddress();
+	
+	public IProvince getProvince();
+
+	public ICity getCity() ;
+
+	public double getLongtitude();
+
+	public double getLatitude();
+
+	public String getTelephone();
 
 	public final static IHotel NULL = new Null();
 
@@ -23,9 +33,8 @@ public interface IHotel extends Serializable {
 		private final long id = -1L;
 		private final String name = "";
 		private final String address = "";
-		private final String description = "";
-		private final String province = "";
-		private final String city = "";
+		private final IProvince province = IProvince.NULL;
+		private final ICity city = ICity.NULL;
 		private final double longtitude = -1D;
 		private final double latitude = -1D;
 		private final String telephone = "";
@@ -46,15 +55,11 @@ public interface IHotel extends Serializable {
 			return address;
 		}
 
-		public String getDescription() {
-			return description;
-		}
-
-		public String getProvince() {
+		public IProvince getProvince() {
 			return province;
 		}
 
-		public String getCity() {
+		public ICity getCity() {
 			return city;
 		}
 
@@ -75,7 +80,6 @@ public interface IHotel extends Serializable {
 					.add("id", id)
 					.add("name", name)
 					.add("address", address)
-					.add("description", description)
 					.add("province", province)
 					.add("longtitude", longtitude)
 					.add("latitude", latitude)
