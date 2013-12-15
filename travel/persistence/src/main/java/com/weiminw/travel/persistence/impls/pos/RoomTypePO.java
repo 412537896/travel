@@ -15,7 +15,7 @@ import java.math.BigInteger;
  */
 @Entity
 @Table(name="room_type")
-@NamedQuery(name="RoomType.findAllByHid", query="SELECT r FROM RoomType r where hid=:hid")
+@NamedQuery(name="RoomType.findAllByHid", query="SELECT r FROM RoomTypePO r where r.hid=:hid")
 public class RoomTypePO implements Serializable,IRoomType {
 	private static final long serialVersionUID = 1L;
 	private long id;
