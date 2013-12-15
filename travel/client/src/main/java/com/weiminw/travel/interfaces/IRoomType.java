@@ -30,14 +30,10 @@ public interface IRoomType extends Serializable{
 		public String getBedType() {
 			return bedType;
 		}
-		public String getDescription() {
-			return description;
-		}
 		
 	}
 	public long getId() ;
 	public long getHid();
 	public String getName();
 	public String getBedType();
-	public String getDescription() ;
 }

@@ -38,11 +38,13 @@ public class HotelResource {
 		System.out.println(hotelPO);
         return gson.toJson(hotelPO);
     }
+	
+	
 	@GET
 	@Path("/{id}")
 	@Consumes("image/png")
 	@Produces("image/png")
 	public Response getHotel2(@PathParam("id") long id) throws URISyntaxException {
-		return Response.temporaryRedirect(new URI("/travel/hotel_pics/10000_1.png")).build();
+		return Response.temporaryRedirect(new URI("/travel/pictures/10000442_1.png")).build();
     }
 }
