@@ -9,17 +9,16 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
+import com.weiminw.business.RoomTypeManager;
 import com.weiminw.travel.interfaces.IRoomType;
 import com.weiminw.travel.interfaces.IRoomTypeManager;
 import com.weiminw.travel.persistence.IPersistence;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.RoomTypeManager;
 import com.weiminw.travel.persistence.impls.pos.RoomTypePO;
 @Path("/hotels/{hid}/roomtypes")
 public class RoomTypeResource {
 	private static final Gson gson = new Gson();
-	IPersistence<RoomTypePO> persistence = new MySqlPersistence<RoomTypePO>();
-	IRoomTypeManager manager = new RoomTypeManager();
+	IRoomTypeManager manager = RoomTypeManager.newInstance();
 	@GET
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
     public String getHotelRoomTypes(@PathParam("hid") long hid) {

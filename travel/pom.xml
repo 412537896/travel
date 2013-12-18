@@ -11,5 +11,6 @@
     <module>web</module>
     <module>client</module>
     <module>persistence</module>
+    <module>business</module>
   </modules>
 </project>

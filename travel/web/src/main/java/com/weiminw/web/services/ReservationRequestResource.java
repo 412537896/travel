@@ -16,9 +16,8 @@ public class ReservationRequestResource {
 	UriInfo uriInfo;
 	@Path("/")
 	@POST
-	public Response createReservationRequest(@FormParam("lowPrice") double lowPrice,@FormParam("lowPrice") double highPrice,@FormParam("lowPrice") Date checkIn,@FormParam("lowPrice") Date checkOut) {
+	public Response createReservationRequest(@FormParam("lowPrice") double lowPrice,@FormParam("highPrice") double highPrice,@FormParam("checkIn") Date checkIn,@FormParam("checkOut") Date checkOut) {
 		return Response.created(uriInfo.getRequestUri().resolve(UUID.randomUUID().toString())).build();
-//		return Response.accepted().contentLocation().build();
 		
 	}
 }

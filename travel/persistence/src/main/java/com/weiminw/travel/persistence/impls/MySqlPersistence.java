@@ -12,8 +12,14 @@ import com.weiminw.travel.persistence.IPersistence;
 
 public final class MySqlPersistence<T> implements IPersistence<T> {
 	private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("travel");
+	
+	private MySqlPersistence(){
+	}
+	public static final <T> MySqlPersistence<T> newInstance(){
+		return new MySqlPersistence<T>();
+	}
 	@Override
-	public T getPersistenceObject(Class<T> typeCLass,long id) {
+	public T getPersistenceObject(Class<? extends T> typeCLass,long id) {
 		EntityManager manager = factory.createEntityManager();
 		return manager.find(typeCLass, id);
 	}

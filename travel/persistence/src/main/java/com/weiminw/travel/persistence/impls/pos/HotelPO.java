@@ -29,9 +29,7 @@ public final class HotelPO implements IHotel {
 	private double longtitude ;
 	private double latitude;
 	private String telephone ;
-	@Transient
 	private ICity city;
-	@Transient
 	private IProvince province;
 	private static final long serialVersionUID = 1L;
 	
@@ -118,11 +116,13 @@ public final class HotelPO implements IHotel {
 				.toString();
 
 	}
+	@Transient
 	@Override
 	public IProvince getProvince() {
 		// TODO Auto-generated method stub
 		return this.province;
 	}
+	@Transient
 	@Override
 	public ICity getCity() {
 		// TODO Auto-generated method stub

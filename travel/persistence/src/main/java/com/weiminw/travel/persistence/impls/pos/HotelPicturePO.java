@@ -12,7 +12,6 @@ public final class HotelPicturePO implements Serializable {
 
 	 
 	private long id; 
-	private long hotelId; 
 	private String url;
 	private static final long serialVersionUID = 1L;	
 	public HotelPicturePO() {
@@ -25,14 +24,6 @@ public final class HotelPicturePO implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-	@Column(name="hotel_id")   
-	public long getHotelId() {
- 		return this.hotelId;
-	}
-
-	public void setHotelId(long hotelId) {
-		this.hotelId = hotelId;
 	}
 	@Column(name="url")     
 	public String getUrl() {
