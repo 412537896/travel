@@ -4,6 +4,9 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <listener>
+  	<listener-class>com.weiminw.web.listeners.HotelApplicationContextListener</listener-class>
+  </listener>
   <servlet>
         <servlet-name>ResourceServices</servlet-name>
         <servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>

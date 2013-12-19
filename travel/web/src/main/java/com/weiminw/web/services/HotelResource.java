@@ -57,8 +57,8 @@ public class HotelResource {
 	
 	@GET
 	@Path("/{id}")
-	@Consumes("image/png")
-	@Produces("image/png")
+	@Consumes("image/*")
+	@Produces("image/*")
 	public Response getHotel2(@PathParam("id") long id) throws URISyntaxException {
 		return Response.temporaryRedirect(new URI("/travel/pictures/10000442_1.png")).build();
     }
