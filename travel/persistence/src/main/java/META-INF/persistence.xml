@@ -5,10 +5,10 @@
 		<class>com.weiminw.travel.persistence.impls.pos.HotelPO</class>
 		<class>com.weiminw.travel.persistence.impls.pos.RoomTypePO</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://10.32.84.49:3306/travel"/>
-			<property name="javax.persistence.jdbc.user" value="triptj"/>
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://115.28.129.120:3306/travel"/>
+			<property name="javax.persistence.jdbc.user" value="admin"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-			<property name="javax.persistence.jdbc.password" value="triptj"/>
+			<property name="javax.persistence.jdbc.password" value="admin"/>
 		</properties>
 	</persistence-unit>
 </persistence>
