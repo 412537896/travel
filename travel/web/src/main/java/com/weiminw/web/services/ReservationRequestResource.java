@@ -18,12 +18,14 @@ import org.apache.log4j.Logger;
 
 import com.google.common.collect.Lists;
 import com.weiminw.business.HotelManager;
-import com.weiminw.business.MessageSender;
-import com.weiminw.business.aos.Seller;
+import com.weiminw.business.MessageSendWorker;
+import com.weiminw.business.ReservationMessageFactory;
+import com.weiminw.business.aos.User;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
-import com.weiminw.travel.interfaces.IReservationRequest;
+import com.weiminw.travel.interfaces.IReservationRequestMessage;
 import com.weiminw.travel.interfaces.ISeller;
+import com.weiminw.travel.interfaces.IUser;
 
 @Path("/reservationRequest")
 public class ReservationRequestResource {
@@ -40,14 +42,11 @@ public class ReservationRequestResource {
 			@FormParam("checkOut") Date checkOut,/*离店时间*/
 			@FormParam("lnt") double lnt,/*用户指定经度*/
 			@FormParam("lat") double lat /*用户指定维度 */) {
-		List<ISeller> sellers = Lists.newArrayList();
-		sellers.add(new Seller());
 		String uuid = UUID.randomUUID().toString();
-		IReservationRequest request = null;
-		for(ISeller seller:sellers){
-			logger.debug("-------------");
-			MessageSender.sendMessage(request,seller);//异步发送；
-		}
+		IReservationRequestMessage request = null;
+		IUser from = new User(),to = new User();
+		IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(from, to);
+		message.send();
 		
 		return Response.created(uriInfo.getRequestUri().resolve(UUID.randomUUID().toString())).build();
 		

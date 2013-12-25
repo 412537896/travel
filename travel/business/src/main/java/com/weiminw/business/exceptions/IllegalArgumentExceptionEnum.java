@@ -1,4 +1,4 @@
-package com.weiminw.business;
+package com.weiminw.business.exceptions;
 
 public enum IllegalArgumentExceptionEnum {
 	ID_INVALID("ID±ØĞë´óÓÚ0");

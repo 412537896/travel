@@ -6,6 +6,7 @@ import java.util.Map;
 import com.google.common.base.Preconditions;
 import com.google.common.cache.CacheLoader;
 import com.google.common.collect.Maps;
+import com.weiminw.business.exceptions.IllegalArgumentExceptionEnum;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;

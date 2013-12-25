@@ -3,17 +3,20 @@ package com.weiminw.travel.interfaces;
 import java.io.Serializable;
 import java.util.Date;
 
-public interface IReservationRequest {
-	public static final IReservationRequest NULL = new Null();
+public interface IReservationRequestMessage {
+	public static final IReservationRequestMessage NULL = new Null();
 	
-	public final static class Null implements IReservationRequest,Serializable {
+	public final static class Null implements IReservationRequestMessage,Serializable {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 4471789341331743289L;
 		private final String id = null;
+		private final long senderId = -1L;
+		private final long receiverId = -1L;
 		private final double lowPrice = -1;
 		private final double highPrice = -1;
+		private final int roomNumber = -1;
 		private final Date checkIn = null;
 		private final Date checkOut = null;
 		public String getId() {
@@ -34,7 +37,20 @@ public interface IReservationRequest {
 		public int getRoomNumber() {
 			return roomNumber;
 		}
-		private final int roomNumber = -1;
+		public long getSenderId() {
+			return senderId;
+		}
+		public long getReceiverId() {
+			return receiverId;
+		}
+		@Override
+		public void send() {
+			
+		}
 		
 	}
+
+	void send();
+	
+	
 }
