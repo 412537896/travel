@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.weiminw.business.UserManager;
+import com.weiminw.business.managers.UserManager;
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.interfaces.IUserManager;
 

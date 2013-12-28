@@ -1,9 +1,10 @@
-package com.weiminw.business;
+package com.weiminw.business.managers;
 
 import java.util.concurrent.Callable;
 
 import org.apache.log4j.Logger;
 
+import com.weiminw.business.workers.MessageSendWorker;
 import com.weiminw.travel.interfaces.IReservationRequestMessage;
 import com.weiminw.travel.interfaces.IUser;
 

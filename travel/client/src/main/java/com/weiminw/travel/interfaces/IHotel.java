@@ -18,6 +18,7 @@ public interface IHotel extends Serializable {
 
 	public String getTelephone();
 
+	public long getDistance();
 	public final static IHotel NULL = new Null();
 
 	static final class Null implements IHotel {
@@ -83,6 +84,11 @@ public interface IHotel extends Serializable {
 					.add("telephone", telephone)
 					.toString();
 
+		}
+
+		@Override
+		public long getDistance() {
+			return -1L;
 		};
 
 	};

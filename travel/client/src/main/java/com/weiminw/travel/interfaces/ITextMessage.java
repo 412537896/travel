@@ -1,5 +1,5 @@
 package com.weiminw.travel.interfaces;
 
-public interface IMessage {
+public interface ITextMessage {
 
 }

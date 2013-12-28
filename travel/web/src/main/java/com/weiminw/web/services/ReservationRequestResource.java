@@ -17,11 +17,11 @@ import javax.ws.rs.core.UriInfo;
 import org.apache.log4j.Logger;
 
 import com.google.common.collect.Lists;
-import com.weiminw.business.HotelManager;
-import com.weiminw.business.MessageSendWorker;
-import com.weiminw.business.ReservationMessageFactory;
-import com.weiminw.business.UserManager;
 import com.weiminw.business.aos.User;
+import com.weiminw.business.managers.HotelManager;
+import com.weiminw.business.managers.ReservationMessageFactory;
+import com.weiminw.business.managers.UserManager;
+import com.weiminw.business.workers.MessageSendWorker;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.interfaces.IReservationRequestMessage;
@@ -32,7 +32,7 @@ import com.weiminw.travel.interfaces.IUserManager;
 public class ReservationRequestResource {
 	@Context
 	UriInfo uriInfo;
-	IHotelManager hotelManager = HotelManager.newInstance();
+	IHotelManager hotelManager = HotelManager.create();
 	IUserManager userManager = UserManager.create();
 	private final static Logger logger = Logger.getLogger(ReservationRequestResource.class);
 	@Path("/")

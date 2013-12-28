@@ -84,6 +84,12 @@ public class HotelPO implements Serializable,IHotel {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
+	@Transient
+	@Override
+	public long getDistance() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
 	

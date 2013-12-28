@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.weiminw.business.HotelManager;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.ICity;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
@@ -37,7 +37,7 @@ public class HotelResource {
 										.registerTypeAdapter(IProvince.class, ProvinceJsonAdapter.newInstance())
 										.create();
 	
-	IHotelManager hotelManager = HotelManager.newInstance();
+	IHotelManager hotelManager = HotelManager.create();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")

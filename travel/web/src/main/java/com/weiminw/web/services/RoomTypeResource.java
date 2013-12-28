@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
-import com.weiminw.business.RoomTypeManager;
+import com.weiminw.business.managers.RoomTypeManager;
 import com.weiminw.travel.interfaces.IRoomType;
 import com.weiminw.travel.interfaces.IRoomTypeManager;
 import com.weiminw.travel.persistence.IPersistence;

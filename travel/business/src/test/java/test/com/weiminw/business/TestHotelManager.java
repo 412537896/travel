@@ -9,12 +9,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.weiminw.business.HotelManager;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 
 public class TestHotelManager {
-	IHotelManager manager = HotelManager.newInstance();
+	IHotelManager manager = HotelManager.create();
 	@Before
 	public void setUp() throws Exception {
 	}
@@ -36,7 +36,7 @@ public class TestHotelManager {
 
 	@Test
 	public void testGetHotelsByLntLat() {
-		List<IHotel> hotel =  this.manager.getHotelsByLntLat(116,39);
+		List<IHotel> hotel =  this.manager.getHotelsByLntLat(116.406887,39.98207);
 		System.out.println(hotel.size());
 	}
 

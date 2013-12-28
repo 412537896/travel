@@ -1,4 +1,4 @@
-package com.weiminw.business;
+package com.weiminw.business.managers;
 
 import com.weiminw.travel.interfaces.IReservationRequestMessage;
 import com.weiminw.travel.interfaces.IUser;

@@ -14,11 +14,12 @@ import javax.ws.rs.core.MediaType;
 
 
 
+
 import org.apache.log4j.Logger;
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
-import com.weiminw.business.HotelManager;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
@@ -28,7 +29,7 @@ import com.weiminw.travel.persistence.impls.pos.HotelPO;
 public class AroundHotelResource {
 	private static final Gson gson = new Gson();
 //	private static final MySqlPersistence<IHotel> p = new MySqlPersistence<IHotel>();
-	private static final IHotelManager hotelManager = HotelManager.newInstance();
+	private static final IHotelManager hotelManager = HotelManager.create();
 	private static final Logger logger = Logger.getLogger(AroundHotelResource.class);
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")

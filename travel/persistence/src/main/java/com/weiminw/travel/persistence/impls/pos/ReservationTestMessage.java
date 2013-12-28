@@ -9,10 +9,8 @@ import java.util.Date;
  * The persistent class for the text_request_message database table.
  * 
  */
-@Entity
-@Table(name="text_request_message")
-@NamedQuery(name="TextRequestMessage.findAll", query="SELECT t FROM TextRequestMessage t")
-public class TextRequestMessage implements Serializable {
+
+public class ReservationTestMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private Date checkIn;
@@ -22,7 +20,7 @@ public class TextRequestMessage implements Serializable {
 	private int roomNum;
 	private int type;
 
-	public TextRequestMessage() {
+	public ReservationTestMessage() {
 	}
 
 

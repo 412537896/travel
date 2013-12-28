@@ -1,4 +1,4 @@
-package com.weiminw.business;
+package com.weiminw.business.workers;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
