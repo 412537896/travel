@@ -16,7 +16,7 @@ import com.weiminw.travel.persistence.impls.pos.RoomTypePO;
 
 public class RoomTypeManager implements IRoomTypeManager {
 
-	final static MySqlPersistence<RoomTypePO> persistence = MySqlPersistence.newInstance();
+	final static MySqlPersistence<RoomTypePO> persistence = MySqlPersistence.create();
 
 	private RoomTypeManager() {
 	}

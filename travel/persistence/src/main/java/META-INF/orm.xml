@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+	<persistence-unit-metadata>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<package>com.weiminw.travel.persistence.impls.pos</package>
+	<entity class="HotelPicturePO">
+		<table name="hotel_picture">
+		</table>
+		<attributes>
+			<id name="id">
+			</id>
+			<basic name="url">
+			</basic>
+		</attributes>
+	</entity>
+	<entity class="HotelPO">
+		<table name="hotel">
+		</table>
+		<named-query name="HotelPO.findPOI">
+			<query>select H from HotelPO H where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat </query>
+		</named-query>
+		<attributes>
+			<id name="id">
+			</id>
+			<basic name="name">
+			</basic>
+			<basic name="address">
+			</basic>
+			<basic name="description">
+			</basic>
+			<basic name="provinceCode">
+				<column name="province"/>
+			</basic>
+			<basic name="cityCode">
+				<column name="city"/>
+			</basic>
+			<basic name="longtitude">
+			</basic>
+			<basic name="latitude">
+			</basic>
+			<basic name="telephone">
+			</basic>
+		</attributes>
+	</entity>
+	<entity class="RoomTypePO">
+		<attributes>
+			<id name="id">
+			</id>
+			<basic name="bedType">
+				<column name="bed_type"/>
+			</basic>
+			<basic name="hid">
+			</basic>
+			<basic name="name">
+			</basic>
+		</attributes>
+	</entity>
+	<entity class="UserPO">
+		<table name="user">
+		</table>
+		<named-native-query name="UserPO.findAllByHid" result-class="com.weiminw.travel.persistence.impls.pos.UserPO">
+			<query>select user.* from seller_hotel_map left join user on user.id = seller_hotel_map.user_id where seller_hotel_map.hotel_id = ?1</query>
+		</named-native-query>
+		<named-native-query name="UserPO.findAllByLntLat" result-class="com.weiminw.travel.persistence.impls.pos.UserPO">
+			<query>select user.* from seller_hotel_map left join hotel  on hotel.ID = seller_hotel_map.hotel_id left join user on user.id = seller_hotel_map.user_id  where hotel.longtitude between ?1 and ?2 and hotel.latitude between ?3 and ?4</query>
+		</named-native-query>
+		<attributes>
+			<id name="id">
+			</id>
+			<basic name="fixLine">
+				<column name="fix_line"/>
+			</basic>
+			<basic name="phone">
+			</basic>
+			<basic name="name">
+			</basic>
+			<basic name="type">
+			</basic>
+		</attributes>
+	</entity>
+</entity-mappings>

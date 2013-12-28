@@ -13,7 +13,7 @@ import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelPO;
 
 public class HotelManager implements IHotelManager {
-	final static MySqlPersistence<IHotel> persistence = MySqlPersistence.newInstance();
+	final static MySqlPersistence<IHotel> persistence = MySqlPersistence.create();
 	@Override
 	public IHotel getHotelById(long id) {
 		Preconditions.checkArgument(id>0,IllegalArgumentExceptionEnum.ID_INVALID.getMessage());
@@ -33,16 +33,16 @@ public class HotelManager implements IHotelManager {
 
 	@Override
 	public List<IHotel> getHotelsByLntLat(double lnt, double lat) {
-		Map<String,Double> params = Maps.newHashMap();
-		double minLnt = lnt - 1;
-		double maxLnt = lnt + 1;
-		double minLat  = lat - 1;
-		double maxLat = lat + 1;
-		params.put("minLnt", minLnt);
-		params.put("maxLnt", maxLnt);
-		params.put("minLat", minLat);
-		params.put("maxLat", maxLat);
-		List<IHotel> hotels = persistence.getPersistenceObjects("HotelPO.findPOI",params);
+		double minLnt = lnt - 0.05;
+		double maxLnt = lnt + 0.05;
+		double minLat  = lat - 0.05;
+		double maxLat = lat + 0.05;
+		List<IHotel> hotels = persistence.getPersistenceObjects("HotelPO.findPOI",
+				Maps.immutableEntry("minLnt", minLnt),
+				Maps.immutableEntry("maxLnt", maxLnt),
+				Maps.immutableEntry("minLat", minLat),
+				Maps.immutableEntry("maxLat", maxLat)
+				);
 		return hotels;
 		
 	}

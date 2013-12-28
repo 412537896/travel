@@ -7,8 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name="hotel_picture")
-public final class HotelPicturePO implements Serializable {
+public class HotelPicturePO implements Serializable {
 
 	 
 	private long id; 
@@ -17,7 +16,6 @@ public final class HotelPicturePO implements Serializable {
 	public HotelPicturePO() {
 		super();
 	} 
-	@Id   
 	public long getId() {
  		return this.id;
 	}
@@ -25,7 +23,6 @@ public final class HotelPicturePO implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-	@Column(name="url")     
 	public String getUrl() {
  		return this.url;
 	}

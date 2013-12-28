@@ -20,18 +20,20 @@ import com.google.common.collect.Lists;
 import com.weiminw.business.HotelManager;
 import com.weiminw.business.MessageSendWorker;
 import com.weiminw.business.ReservationMessageFactory;
+import com.weiminw.business.UserManager;
 import com.weiminw.business.aos.User;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.interfaces.IReservationRequestMessage;
-import com.weiminw.travel.interfaces.ISeller;
 import com.weiminw.travel.interfaces.IUser;
+import com.weiminw.travel.interfaces.IUserManager;
 
 @Path("/reservationRequest")
 public class ReservationRequestResource {
 	@Context
 	UriInfo uriInfo;
 	IHotelManager hotelManager = HotelManager.newInstance();
+	IUserManager userManager = UserManager.create();
 	private final static Logger logger = Logger.getLogger(ReservationRequestResource.class);
 	@Path("/")
 	@POST
@@ -43,11 +45,15 @@ public class ReservationRequestResource {
 			@FormParam("lnt") double lnt,/*用户指定经度*/
 			@FormParam("lat") double lat /*用户指定维度 */) {
 		String uuid = UUID.randomUUID().toString();
-		IReservationRequestMessage request = null;
-		IUser from = new User(),to = new User();
-		IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(from, to);
-		message.send();
-		
+		List<IHotel> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat);
+		logger.debug(hotels);
+		for(IHotel hotel:hotels){
+			List<IUser> tos = userManager.getUserByHid(hotel.getId());
+			for(IUser user:tos){
+				IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
+				message.send();
+			}
+		}
 		return Response.created(uriInfo.getRequestUri().resolve(UUID.randomUUID().toString())).build();
 		
 	}

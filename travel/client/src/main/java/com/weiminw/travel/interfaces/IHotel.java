@@ -11,9 +11,6 @@ public interface IHotel extends Serializable {
 
 	public String getAddress();
 	
-	public IProvince getProvince();
-
-	public ICity getCity() ;
 
 	public double getLongtitude();
 

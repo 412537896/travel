@@ -6,8 +6,6 @@ import java.util.concurrent.Executors;
 
 import org.apache.log4j.Logger;
 
-import com.weiminw.travel.interfaces.IReservationRequestMessage;
-import com.weiminw.travel.interfaces.ISeller;
 
 public final class MessageSendWorker {
 	private static final ExecutorService executor = Executors.newFixedThreadPool(100);
