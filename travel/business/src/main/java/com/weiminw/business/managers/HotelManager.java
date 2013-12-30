@@ -5,7 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
+
+
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
@@ -28,7 +32,7 @@ import com.weiminw.travel.utils.LntLatCaculator;
 
 public class HotelManager implements IHotelManager {
 	private final static MySqlPersistence<HotelPO> persistence = MySqlPersistence.create();
-	private Logger logger = Logger.getLogger(HotelManager.class);
+	private Logger logger = LogManager.getLogger(HotelManager.class);
 	/**
 	 * 过滤半径5公里的酒店
 	 *
@@ -97,6 +101,12 @@ public class HotelManager implements IHotelManager {
 		logger.debug(filteredHotels.size());
 		return FluentIterable.from(filteredHotels).limit(20).toList();
 		
+	}
+
+	@Override
+	public List<IHotel> getHotelsByLntLat(double lnt, double lat, int start) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

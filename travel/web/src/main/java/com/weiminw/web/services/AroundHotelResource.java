@@ -34,7 +34,7 @@ public class AroundHotelResource {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
-	public String getHotels(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat){
+	public String getHotels(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat,@QueryParam("start") int start){
 		List<IHotel> hotels = hotelManager.getHotelsByLntLat(lnt,lat);
 		return gson.toJson(hotels);
 	}

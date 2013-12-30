@@ -37,13 +37,13 @@ public final class UserManager implements IUserManager{
 		double maxLnt = lnt + 1;
 		double minLat  = lat - 1;
 		double maxLat = lat + 1;
-		List<IUser> hotels = persistence.getPersistenceObjects("UserPO.findAllByLntLat",
+		List<IUser> sellers = persistence.getPersistenceObjects("UserPO.findAllByLntLat",
 				Maps.immutableEntry("1", minLnt),
 				Maps.immutableEntry("2", maxLnt),
 				Maps.immutableEntry("3", minLat),
 				Maps.immutableEntry("4", maxLat)
 		);
-		return hotels;
+		return sellers;
 	}
 	
 	

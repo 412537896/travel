@@ -28,7 +28,7 @@ import com.weiminw.travel.interfaces.IReservationRequestMessage;
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.interfaces.IUserManager;
 
-@Path("/reservationRequest")
+@Path("/reservation/request")
 public class ReservationRequestResource {
 	@Context
 	UriInfo uriInfo;
@@ -45,14 +45,19 @@ public class ReservationRequestResource {
 			@FormParam("lnt") double lnt,/*用户指定经度*/
 			@FormParam("lat") double lat /*用户指定维度 */) {
 		String uuid = UUID.randomUUID().toString();
-		List<IHotel> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat);
-		logger.debug(hotels);
-		for(IHotel hotel:hotels){
-			List<IUser> tos = userManager.getUserByHid(hotel.getId());
-			for(IUser user:tos){
-				IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
-				message.send();
-			}
+//		List<IHotel> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat);
+//		logger.debug(hotels);
+//		for(IHotel hotel:hotels){
+//			List<IUser> tos = userManager.getUserByHid(hotel.getId());
+//			for(IUser user:tos){
+//				IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
+//				message.send();
+//			}
+//		}
+		List<IUser> users = this.userManager.getSellerByLntLat(lnt, lat);
+		for(IUser user:users){
+			IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
+			message.send();
 		}
 		return Response.created(uriInfo.getRequestUri().resolve(UUID.randomUUID().toString())).build();
 		

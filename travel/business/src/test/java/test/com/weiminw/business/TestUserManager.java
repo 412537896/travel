@@ -35,5 +35,12 @@ public class TestUserManager {
 		Assert.assertNotNull(user);
 		Assert.assertNotNull(user.size()>0);
 	}
+	@Test
+	public void testGetSellerByLntLat(){
+		List<IUser> users = manager.getSellerByLntLat(116.406887,39.98207);
+		Assert.assertNotNull(users);
+		System.out.println(users);
+	}
 
 }
+
