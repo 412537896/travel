@@ -59,11 +59,14 @@ public class HotelSpatial {
 			indexWriter.addDocument(newSampleDocument(
 			        2, SpatialContext.GEO.makePoint(-80.93, 33.77)));
 
-			indexWriter.addDocument(newSampleDocument(
-			        3, SpatialContext.GEO.makePoint(-80.91, 33.4)));
-			
-			indexWriter.addDocument(newSampleDocument(
-			        4, SpatialContext.GEO.makePoint(-80.94, 33.87)));
+			    //When parsing a string to a shape, the presence of a comma means it's y-x
+			    // order (lon, lat)
+			    indexWriter.addDocument(newSampleDocument(
+			        4, SpatialContext.GEO.readShape("-50.7693246, 60.9289094")));
+
+			    indexWriter.addDocument(newSampleDocument(
+			        20, SpatialContext.GEO.makePoint(0.1,0.1), SpatialContext.GEO.makePoint(0, 0)));
+
 			    indexWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
