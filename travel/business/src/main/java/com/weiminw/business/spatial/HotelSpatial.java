@@ -16,6 +16,7 @@ import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
@@ -45,7 +46,8 @@ public class HotelSpatial {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
 		args.put(SpatialPrefixTreeFactory.PREFIX_TREE, GeohashPrefixTree.class.getName());
 		args.put(SpatialPrefixTreeFactory.MAX_LEVELS, "12");
-		grid = SpatialPrefixTreeFactory.makeSPT(args, SpatialPrefixTreeFactory.class.getClassLoader(), SpatialContext.GEO);
+//		grid = SpatialPrefixTreeFactory.makeSPT(args, Thread.currentThread().getContextClassLoader(), SpatialContext.GEO);
+		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
 	/**
@@ -57,14 +59,11 @@ public class HotelSpatial {
 			indexWriter.addDocument(newSampleDocument(
 			        2, SpatialContext.GEO.makePoint(-80.93, 33.77)));
 
-			    //When parsing a string to a shape, the presence of a comma means it's y-x
-			    // order (lon, lat)
-			    indexWriter.addDocument(newSampleDocument(
-			        4, SpatialContext.GEO.readShape("-50.7693246, 60.9289094")));
-
-			    indexWriter.addDocument(newSampleDocument(
-			        20, SpatialContext.GEO.makePoint(0.1,0.1), SpatialContext.GEO.makePoint(0, 0)));
-
+			indexWriter.addDocument(newSampleDocument(
+			        3, SpatialContext.GEO.makePoint(-80.91, 33.4)));
+			
+			indexWriter.addDocument(newSampleDocument(
+			        4, SpatialContext.GEO.makePoint(-80.94, 33.87)));
 			    indexWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -91,17 +90,26 @@ public class HotelSpatial {
 	
 	public static void search(double lnt,double lat,int radius) throws IOException{
 		Point pt = SpatialContext.GEO.makePoint(lat, lat);
-		double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM)*1000;
+		double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM);
 	    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
 		IndexReader indexReader = DirectoryReader.open(directory);
 		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 		Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
-		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, radius));
+		Sort idSort = new Sort(new SortField("id", SortField.Type.INT));
+		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(100, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
 		Filter filter = strategy.makeFilter(args);
-		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, 20, distSort);
-		System.out.println(docs);
+		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, 10, distSort);
+		assertDocMatchedIds(indexSearcher, docs, 2);
 	}
+	
+	private static void assertDocMatchedIds(IndexSearcher indexSearcher, TopDocs docs, int... ids) throws IOException {
+	    int[] gotIds = new int[docs.totalHits];
+	    for (int i = 0; i < gotIds.length; i++) {
+	      gotIds[i] = indexSearcher.doc(docs.scoreDocs[i].doc).getField("id").numericValue().intValue();
+	      System.out.println(gotIds[i]);
+	    }
+	  }
 	public static void main(String[] args) throws IOException {
-		HotelSpatial.search(1, 1, 2);
+		HotelSpatial.search(-80.92, 33.70, 2000000);
 	}
 }

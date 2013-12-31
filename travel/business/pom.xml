@@ -29,5 +29,9 @@
   		<groupId>org.apache.lucene</groupId>
   		<artifactId>lucene-spatial</artifactId>
   	</dependency>
+  	<dependency>
+  		<groupId>junit</groupId>
+  		<artifactId>junit</artifactId>
+  	</dependency>
   </dependencies>
 </project>
