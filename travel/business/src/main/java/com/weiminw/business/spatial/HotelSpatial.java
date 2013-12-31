@@ -16,6 +16,7 @@ import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.Sort;
+import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
@@ -45,7 +46,8 @@ public class HotelSpatial {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
 		args.put(SpatialPrefixTreeFactory.PREFIX_TREE, GeohashPrefixTree.class.getName());
 		args.put(SpatialPrefixTreeFactory.MAX_LEVELS, "12");
-		grid = SpatialPrefixTreeFactory.makeSPT(args, SpatialPrefixTreeFactory.class.getClassLoader(), SpatialContext.GEO);
+//		grid = SpatialPrefixTreeFactory.makeSPT(args, Thread.currentThread().getContextClassLoader(), SpatialContext.GEO);
+		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
 	/**
@@ -90,18 +92,27 @@ public class HotelSpatial {
 
 	
 	public static void search(double lnt,double lat,int radius) throws IOException{
-		Point pt = SpatialContext.GEO.makePoint(lat, lat);
-		double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM)*1000;
-	    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
+//		Point pt = SpatialContext.GEO.makePoint(lat, lat);
+//		double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM)*1000;
+//	    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
 		IndexReader indexReader = DirectoryReader.open(directory);
 		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-		Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
-		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, radius));
+//		Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
+		Sort idSort = new Sort(new SortField("id", SortField.Type.INT));
+		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(200, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
 		Filter filter = strategy.makeFilter(args);
-		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, 20, distSort);
-		System.out.println(docs);
+		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, 10, idSort);
+		assertDocMatchedIds(indexSearcher, docs, 2);
 	}
+	
+	private static void assertDocMatchedIds(IndexSearcher indexSearcher, TopDocs docs, int... ids) throws IOException {
+	    int[] gotIds = new int[docs.totalHits];
+	    for (int i = 0; i < gotIds.length; i++) {
+	      gotIds[i] = indexSearcher.doc(docs.scoreDocs[i].doc).getField("id").numericValue().intValue();
+	      System.out.println(gotIds[i]);
+	    }
+	  }
 	public static void main(String[] args) throws IOException {
-		HotelSpatial.search(1, 1, 2);
+		HotelSpatial.search(60.0, -50.0, 2000000);
 	}
 }
