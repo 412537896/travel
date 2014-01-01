@@ -8,6 +8,10 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 
+import com.weiminw.business.managers.HotelManager;
+import com.weiminw.business.spatial.HotelSpatial;
+import com.weiminw.travel.interfaces.IHotelManager;
+
 /**
  * Application Lifecycle Listener implementation class ApplicatoinShutdownListener
  *
@@ -26,17 +30,15 @@ public final class HotelApplicationContextListener implements ServletContextList
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent event) {
-        // TODO Auto-generated method stub
-    	event.getServletContext().setAttribute("executors", executors);
+    	IHotelManager hotelManager = HotelManager.create();
+    	HotelSpatial.buildIndex(hotelManager.getHotels());
     }
 
 	/**
      * @see ServletContextListener#contextDestroyed(ServletContextEvent)
      */
     public void contextDestroyed(ServletContextEvent event) {
-    	event.getServletContext().setAttribute("executors", null);
-    	this.executors.shutdown();//禁止提交新的任务;
-    	this.executors.shutdownNow();//取消正在等待的任务，并尝试终止所有任务。
+    	
     }
 	
 }

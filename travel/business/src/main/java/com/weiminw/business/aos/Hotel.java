@@ -69,11 +69,11 @@ public class Hotel implements IHotel {
 		return this.distance;
 	}
 	
-	public static final Function<HotelPO,IHotel> getHotelTrans(final double currentLnt,final double currentLat){
-		return new Function<HotelPO,IHotel>(){
+	public static final Function<IHotel,IHotel> getHotelTrans(final double currentLnt,final double currentLat){
+		return new Function<IHotel,IHotel>(){
 
 			@Override
-			public IHotel apply(HotelPO input) {
+			public IHotel apply(IHotel input) {
 				return new Hotel(
 						input.getId(),
 						input.getName(),

@@ -1,6 +1,5 @@
 package com.weiminw.business.managers;
 
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +10,10 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicate;
 import com.google.common.cache.CacheLoader;
-import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.primitives.Doubles;
 import com.weiminw.business.aos.Hotel;
@@ -28,11 +22,11 @@ import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelPO;
-import com.weiminw.travel.utils.LntLatCaculator;
 
 public class HotelManager implements IHotelManager {
-	private final static MySqlPersistence<HotelPO> persistence = MySqlPersistence.create();
+	private final static MySqlPersistence<IHotel> persistence = MySqlPersistence.create();
 	private Logger logger = LogManager.getLogger(HotelManager.class);
+	
 	/**
 	 * 过滤半径5公里的酒店
 	 *
@@ -53,6 +47,8 @@ public class HotelManager implements IHotelManager {
 		}
 		
 	};
+	
+	
 		
 	/**
 	 * 通过酒店ID获取酒店信息
@@ -66,11 +62,9 @@ public class HotelManager implements IHotelManager {
 	/**
 	 * 获取全部酒店
 	 */
-	@Deprecated
 	@Override
 	public List<IHotel> getHotels() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.persistence.getPersistenceObjects("HotelPO.findAll");
 	}
 	/**
 	 * 创建HotelManager实例
@@ -90,7 +84,7 @@ public class HotelManager implements IHotelManager {
 		Map.Entry<String, Double> maxLntParam = Maps.immutableEntry("maxLnt", lnt + 0.05);
 		Map.Entry<String, Double> minLatParam = Maps.immutableEntry("minLat", lat - 0.05);
 		Map.Entry<String, Double> maxLatParam = Maps.immutableEntry("maxLat", lat + 0.05);
-		List<HotelPO> hotels = persistence.getPersistenceObjects("HotelPO.findPOI",
+		List<IHotel> hotels = persistence.getPersistenceObjects("HotelPO.findPOI",
 				minLntParam,
 				maxLntParam,
 				minLatParam,

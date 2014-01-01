@@ -30,7 +30,7 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	public List<T> getPersistenceObjects(String query) {
 		EntityManager manager = factory.createEntityManager();
 		Query namedQuery= manager.createNamedQuery(query);
-		namedQuery.setMaxResults(10);
+//		namedQuery.setMaxResults(10000);
 		return namedQuery.getResultList();
 	}
 	
