@@ -7,4 +7,5 @@ public interface IHotelManager {
 	List<IHotel> getHotels();
 	List<IHotel> getHotelsByLntLat(double lnt, double lat);
 	List<IHotel> getHotelsByLntLat(double lnt, double lat,int start);
+	boolean updateHotel(IHotel hotel);
 }

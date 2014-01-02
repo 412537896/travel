@@ -103,4 +103,14 @@ public class HotelManager implements IHotelManager {
 		return null;
 	}
 
+	@Override
+	public boolean updateHotel(IHotel hotel) {
+		HotelPO po = (HotelPO) this.persistence.getPersistenceObject(HotelPO.class, hotel.getId());
+		po.setAddress(hotel.getAddress());
+		po.setLatitude(hotel.getLatitude());
+		po.setLongtitude(hotel.getLongtitude());
+		this.persistence.updatePersistenceObject(po);
+		return true;
+	}
+
 }
