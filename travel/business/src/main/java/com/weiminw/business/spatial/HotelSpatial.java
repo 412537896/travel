@@ -51,8 +51,6 @@ public class HotelSpatial {
 	private static final PrefixTreeStrategy strategy;
 	static {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
-		args.put(SpatialPrefixTreeFactory.PREFIX_TREE, GeohashPrefixTree.class.getName());
-		args.put(SpatialPrefixTreeFactory.MAX_LEVELS, "12");
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
@@ -60,7 +58,7 @@ public class HotelSpatial {
 	private static Document createHotelLntLatPoint(IHotel hotel) {
 	    Document doc = new Document();
 	    doc.add(new LongField("id", hotel.getId(), Field.Store.YES));
-	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLongtitude(), hotel.getLatitude());
+	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLatitude(), hotel.getLongtitude());
 	    for (Field f : strategy.createIndexableFields(shape)) {
 	    	doc.add(f);
 	    }

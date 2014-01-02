@@ -55,7 +55,7 @@ public class CorrectLntLat {
 			}
 		}
 		
-//		System.out.println(CorrectLntLat.getLngLat("乌镇清水园"));
+//		System.out.println(CorrectLntLat.getLngLat("北京方恒假日"));
 	}
 	
 	public static Map<String,Double> getLngLat (String address) throws URISyntaxException, ClientProtocolException, IOException{
