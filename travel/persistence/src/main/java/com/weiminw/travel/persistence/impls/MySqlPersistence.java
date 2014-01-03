@@ -11,6 +11,7 @@ import javax.persistence.Query;
 
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.persistence.IPersistence;
+import com.weiminw.travel.persistence.impls.pos.HotelPO;
 
 public final class MySqlPersistence<T> implements IPersistence<T> {
 	private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("travel");
@@ -23,15 +24,18 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	@Override
 	public T getPersistenceObject(Class<? extends T> typeCLass,long id) {
 		EntityManager manager = factory.createEntityManager();
-		return manager.find(typeCLass, id);
+		T result = manager.find(typeCLass, id);
+		manager.close();
+		return result;
 	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> getPersistenceObjects(String query) {
 		EntityManager manager = factory.createEntityManager();
 		Query namedQuery= manager.createNamedQuery(query);
-//		namedQuery.setMaxResults(10000);
-		return namedQuery.getResultList();
+		List<T> results = namedQuery.getResultList();
+		manager.close();
+		return results;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -42,7 +46,9 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 		for(Map.Entry<String,?> entry:parameters){
 			namedQuery.setParameter(entry.getKey(), entry.getValue());
 		}
-		return namedQuery.getResultList();
+		List<T> results = namedQuery.getResultList();
+		manager.close();
+		return results;
 	}
 	
 	public boolean insertPersistenceObjects(T object){
@@ -55,8 +61,18 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 		manager.getTransaction().begin();
 		T merged = manager.merge(object);
 		manager.getTransaction().commit();
+		manager.close();
 		return true;
 		
+	}
+	public static void main(String[] args) {
+		EntityManager manager = factory.createEntityManager();
+		HotelPO po = manager.find(HotelPO.class, 10000893L);
+		po.setLongtitude(8);
+		manager = factory.createEntityManager();
+		manager.getTransaction().begin();
+		manager.merge(po);
+		manager.getTransaction().commit();
 	}
 	
 	

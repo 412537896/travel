@@ -90,7 +90,16 @@ public class HotelPO implements Serializable,IHotel {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+	@Override
+	public String toString() {
+		return "HotelPO [id=" + id + ", name=" + name + ", address=" + address
+				+ ", description=" + description + ", provinceCode="
+				+ provinceCode + ", cityCode=" + cityCode + ", longtitude="
+				+ longtitude + ", latitude=" + latitude + ", telephone="
+				+ telephone + "]";
+	}
+	
+	
 
 	
 }

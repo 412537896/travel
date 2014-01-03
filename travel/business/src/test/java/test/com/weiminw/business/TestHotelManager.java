@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.persistence.impls.pos.HotelPO;
 
 public class TestHotelManager {
 	IHotelManager manager = HotelManager.create();
@@ -34,10 +35,18 @@ public class TestHotelManager {
 	}
 
 
-	@Test
+//	@Test
 	public void testGetHotelsByLntLat() {
 		List<IHotel> hotel =  this.manager.getHotelsByLntLat(116.406887,39.98207);
 		System.out.println(hotel.size());
 	}
 
+	@Test
+	public void testUpdateHotel(){
+		HotelPO hotel = (HotelPO) this.manager.getHotelById(10000893);
+		hotel.setLongtitude(1D);
+		this.manager.updateHotel(hotel);
+		IHotel nhotel = this.manager.getHotelById(10000893);
+		Assert.assertEquals(nhotel.getLongtitude(), 1D);
+	}
 }

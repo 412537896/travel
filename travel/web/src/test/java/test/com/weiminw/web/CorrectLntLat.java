@@ -57,9 +57,12 @@ public class CorrectLntLat {
 			}
 		}
 		
-//		Map<String,Double> lntlat = CorrectLntLat.getLngLat("青岛贵和假日商务酒店");
-//		logger_info.info("-------------");
-//		logger_error.info("111111");
+//		HotelPO po = (HotelPO) manager.getHotelById(10000893L);
+//		Map<String,Double> lntlat = getLngLat(po.getName());
+//		po.setLongtitude(lntlat.get("lng"));
+//		po.setLatitude(lntlat.get("lat"));
+//		System.out.println(po);
+//		manager.updateHotel(po);
 		
 		
 	}
