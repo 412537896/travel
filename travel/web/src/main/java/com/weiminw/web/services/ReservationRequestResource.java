@@ -14,7 +14,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
 import com.weiminw.business.aos.User;
@@ -34,7 +35,7 @@ public class ReservationRequestResource {
 	UriInfo uriInfo;
 	IHotelManager hotelManager = HotelManager.create();
 	IUserManager userManager = UserManager.create();
-	private final static Logger logger = Logger.getLogger(ReservationRequestResource.class);
+	private final static Logger logger = LogManager.getLogger(ReservationRequestResource.class);
 	@Path("/")
 	@POST
 	public Response createReservationRequest(

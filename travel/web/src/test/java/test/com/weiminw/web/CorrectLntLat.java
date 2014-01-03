@@ -1,4 +1,4 @@
-package web;
+package test.com.weiminw.web;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -12,6 +12,8 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
@@ -26,9 +28,9 @@ public class CorrectLntLat {
 		public Map<String,Object> result;
 	}
 	static CloseableHttpClient httpclient = HttpClients.createDefault();
-	
+	public static final Logger logger_info = LogManager.getLogger("info");
+	public static final Logger logger_error = LogManager.getLogger("error");
 	public static void main(String[] args) throws ClientProtocolException, URISyntaxException, IOException  {
-		// TODO Auto-generated method stub
 		IHotelManager manager = HotelManager.create();
 		for(IHotel hotel:manager.getHotels()){
 			HotelPO po = (HotelPO) hotel;
@@ -38,10 +40,10 @@ public class CorrectLntLat {
 					po.setLatitude(lntlat.get("lng"));
 					po.setLatitude(lntlat.get("lat"));
 					manager.updateHotel(po);
-//					System.out.println("id = "+hotel.getId()+",lng = "+lntlat.get("lng")+",lat = "+lntlat.get("lat"));
+					logger_info.info("id = "+hotel.getId()+",lng = "+lntlat.get("lng")+",lat = "+lntlat.get("lat"));
 				}
 				else {
-					System.out.println("id = "+hotel.getId()+",address = "+hotel.getName());
+					logger_error.info("id = "+hotel.getId()+",address = "+hotel.getName());
 				}
 			} catch (ClientProtocolException e) {
 				// TODO Auto-generated catch block
@@ -55,7 +57,11 @@ public class CorrectLntLat {
 			}
 		}
 		
-//		System.out.println(CorrectLntLat.getLngLat("北京方恒假日"));
+//		Map<String,Double> lntlat = CorrectLntLat.getLngLat("青岛贵和假日商务酒店");
+//		logger_info.info("-------------");
+//		logger_error.info("111111");
+		
+		
 	}
 	
 	public static Map<String,Double> getLngLat (String address) throws URISyntaxException, ClientProtocolException, IOException{
@@ -68,6 +74,7 @@ public class CorrectLntLat {
 		System.out.println(responseString);
 		Gson gson = new Gson();
 		Map<String,Object> result = gson.fromJson(responseString,ResultWrapper.class).result;
+		
 		if (result == null||result.isEmpty()){
 			return null;
 		}

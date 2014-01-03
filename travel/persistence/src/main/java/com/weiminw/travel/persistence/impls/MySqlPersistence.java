@@ -52,7 +52,9 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	
 	public boolean updatePersistenceObject(T object){
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		T merged = manager.merge(object);
+		manager.getTransaction().commit();
 		return true;
 		
 	}
