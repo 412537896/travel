@@ -68,7 +68,7 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	public static void main(String[] args) {
 		EntityManager manager = factory.createEntityManager();
 		HotelPO po = manager.find(HotelPO.class, 10000893L);
-		po.setLongtitude(8);
+		po.setLongitude(8);
 		manager = factory.createEntityManager();
 		manager.getTransaction().begin();
 		manager.merge(po);

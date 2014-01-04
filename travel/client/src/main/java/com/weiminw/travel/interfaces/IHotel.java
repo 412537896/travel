@@ -6,19 +6,14 @@ import com.google.common.base.Objects;
 
 public interface IHotel extends Serializable {
 	public long getId();
-
 	public String getName();
-
 	public String getAddress();
-	
-
-	public double getLongtitude();
-
+	public double getLongitude();
 	public double getLatitude();
-
 	public String getTelephone();
-
-	public long getDistance();
+	public String getDescription();
+	public int getProvince();
+	public int getCity();
 	public final static IHotel NULL = new Null();
 
 	static final class Null implements IHotel {
@@ -27,69 +22,61 @@ public interface IHotel extends Serializable {
 		 * 
 		 */
 		private static final long serialVersionUID = -3773043675054478957L;
-
-		private final long id = -1L;
-		private final String name = "";
-		private final String address = "";
-		private final IProvince province = IProvince.NULL;
-		private final ICity city = ICity.NULL;
-		private final double longtitude = -1D;
-		private final double latitude = -1D;
-		private final String telephone = "";
-
 		public Null() {
 			// TODO Auto-generated constructor stub
 		}
 
 		public long getId() {
-			return id;
+			return -1L;
 		}
 
 		public String getName() {
-			return name;
+			return "";
 		}
 
 		public String getAddress() {
-			return address;
-		}
-
-		public IProvince getProvince() {
-			return province;
-		}
-
-		public ICity getCity() {
-			return city;
+			return "";
 		}
 
 		public double getLongtitude() {
-			return longtitude;
+			return -1D;
 		}
 
 		public double getLatitude() {
-			return latitude;
+			return -1D;
 		}
 
 		public String getTelephone() {
-			return telephone;
+			return "";
 		}
-
-		public String toString() {
-			return Objects.toStringHelper(this)
-					.add("id", id)
-					.add("name", name)
-					.add("address", address)
-					.add("province", province)
-					.add("longtitude", longtitude)
-					.add("latitude", latitude)
-					.add("telephone", telephone)
-					.toString();
-
+		
+		@Override
+		public double getLongitude() {
+			// TODO Auto-generated method stub
+			return 0;
 		}
 
 		@Override
-		public long getDistance() {
-			return -1L;
-		};
+		public String getDescription() {
+			// TODO Auto-generated method stub
+			return "";
+		}
+		public String toString(){
+			return Objects.toStringHelper(this).toString();
+		}
+
+		@Override
+		public int getProvince() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+
+		@Override
+		public int getCity() {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		
 
 	};
 }

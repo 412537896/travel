@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.weiminw.business.aos.Hotel;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
@@ -26,7 +27,7 @@ public class TestHotelManager {
 
 	@Test
 	public void testGetHotelById() {
-		IHotel hotel =  this.manager.getHotelById(10000442L);
+		IHotel hotel =  this.manager.getHotelById(1000442L);
 		Assert.assertNotNull(hotel);
 	}
 	@Test
@@ -35,18 +36,14 @@ public class TestHotelManager {
 	}
 
 
-//	@Test
-	public void testGetHotelsByLntLat() {
-		List<IHotel> hotel =  this.manager.getHotelsByLntLat(116.406887,39.98207);
-		System.out.println(hotel.size());
-	}
 
 	@Test
 	public void testUpdateHotel(){
-		HotelPO hotel = (HotelPO) this.manager.getHotelById(10000893);
-		hotel.setLongtitude(1D);
+		IHotel hotel =  this.manager.getHotelById(10000893);
+		hotel = Hotel.builder(hotel).longitude(2D).build();
 		this.manager.updateHotel(hotel);
 		IHotel nhotel = this.manager.getHotelById(10000893);
-		Assert.assertEquals(nhotel.getLongtitude(), 1D);
+		System.out.println(nhotel);
+		Assert.assertEquals(nhotel.getLongitude(), 2D);
 	}
 }

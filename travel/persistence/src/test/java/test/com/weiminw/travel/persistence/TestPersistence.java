@@ -10,7 +10,7 @@ import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelPO;
 
 public class TestPersistence {
-	IPersistence<IHotel> persistence = MySqlPersistence.create();
+	IPersistence<HotelPO> persistence = MySqlPersistence.create();
 	@Test
 	public void testGetPersistenceObject() {
 		fail("Not yet implemented");
@@ -33,8 +33,8 @@ public class TestPersistence {
 
 	@Test
 	public void testUpdatePersistenceObject() {
-		HotelPO po = (HotelPO) persistence.getPersistenceObject(HotelPO.class, 10000893L);
-		po.setLongtitude(1);
+		HotelPO po =  persistence.getPersistenceObject(HotelPO.class, 10000893L);
+		po.setLongitude(1);
 		this.persistence.updatePersistenceObject(po);
 		
 	}

@@ -49,6 +49,7 @@ public class HotelSpatial {
 	private static final RAMDirectory directory = new RAMDirectory();
 	private static final SpatialPrefixTree grid;
 	private static final PrefixTreeStrategy strategy;
+	private static final int MAX_TOP = 300;
 	static {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
@@ -58,7 +59,7 @@ public class HotelSpatial {
 	private static Document createHotelLntLatPoint(IHotel hotel) {
 	    Document doc = new Document();
 	    doc.add(new LongField("id", hotel.getId(), Field.Store.YES));
-	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLatitude(), hotel.getLongtitude());
+	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLongitude(), hotel.getLatitude());
 	    for (Field f : strategy.createIndexableFields(shape)) {
 	    	doc.add(f);
 	    }
@@ -75,7 +76,7 @@ public class HotelSpatial {
 		Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
 		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(radius, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
 		Filter filter = strategy.makeFilter(args);
-		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, 50, distSort);
+		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, MAX_TOP, distSort);
 		List<Long> hotelIds = Lists.newArrayListWithExpectedSize(docs.totalHits);
 		for(ScoreDoc doc:docs.scoreDocs){
 			hotelIds.add(indexSearcher.doc(doc.doc).getField("id").numericValue().longValue());

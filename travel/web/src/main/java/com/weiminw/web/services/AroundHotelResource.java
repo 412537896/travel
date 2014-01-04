@@ -31,12 +31,13 @@ public class AroundHotelResource {
 	private static final Gson gson = new Gson();
 //	private static final MySqlPersistence<IHotel> p = new MySqlPersistence<IHotel>();
 	private static final IHotelManager hotelManager = HotelManager.create();
+	
 	private static final Logger logger = LogManager.getLogger(AroundHotelResource.class);
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
 	public String getHotels(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat,@QueryParam("start") int start){
-		List<IHotel> hotels = hotelManager.getHotelsByLntLat(lnt,lat);
+		List<IHotel> hotels = hotelManager.getHotelsByLntLat(lnt,lat,0);
 		return gson.toJson(hotels);
 	}
 	

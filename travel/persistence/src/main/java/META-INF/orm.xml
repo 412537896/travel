@@ -19,7 +19,7 @@
 		<table name="hotel">
 		</table>
 		<named-query name="HotelPO.findPOI">
-			<query>select H from HotelPO H  where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat</query>
+			<query>select H from HotelPO H  where H.longitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat</query>
 		</named-query>
 		<named-query name="HotelPO.findAll">
 			<query>select h from HotelPO h</query>
@@ -33,16 +33,16 @@
 			</basic>
 			<basic name="description">
 			</basic>
-			<basic name="provinceCode">
-				<column name="province"/>
-			</basic>
-			<basic name="longtitude">
+			<basic name="longitude">
 			</basic>
 			<basic name="latitude">
 			</basic>
 			<basic name="telephone">
 			</basic>
-			<basic name="cityCode">
+			<basic name="province">
+				<column name="province"/>
+			</basic>
+			<basic name="city">
 				<column name="city"/>
 			</basic>
 		</attributes>

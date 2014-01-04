@@ -18,7 +18,7 @@ import java.util.List;
  * The persistent class for the hotel database table.
  * 
  */
-public class HotelPO implements Serializable,IHotel {
+public class HotelPO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private long id;
@@ -27,9 +27,23 @@ public class HotelPO implements Serializable,IHotel {
 	private String description;
 	private int provinceCode ;
 	private int cityCode ;
-	private double longtitude ;
+	private double longitude ;
 	private double latitude;
 	private String telephone ;
+	
+	public HotelPO() {
+		
+	}
+	public HotelPO(IHotel hotel){
+		this.id = hotel.getId();
+		this.name = hotel.getName();
+		this.address = hotel.getAddress();
+		this.description = hotel.getDescription();
+		this.provinceCode = hotel.getProvince();
+		this.cityCode = hotel.getCity();
+		this.longitude = hotel.getLongitude();
+		this.latitude = hotel.getLatitude();
+	}
 	public long getId() {
 		return id;
 	}
@@ -54,23 +68,23 @@ public class HotelPO implements Serializable,IHotel {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getProvinceCode() {
+	public int getProvince() {
 		return provinceCode;
 	}
-	public void setProvinceCode(int provinceCode) {
+	public void setProvince(int provinceCode) {
 		this.provinceCode = provinceCode;
 	}
-	public int getCityCode() {
+	public int getCity() {
 		return cityCode;
 	}
-	public void setCityCode(int cityCode) {
+	public void setCity(int cityCode) {
 		this.cityCode = cityCode;
 	}
-	public double getLongtitude() {
-		return longtitude;
+	public double getLongitude() {
+		return longitude;
 	}
-	public void setLongtitude(double longtitude) {
-		this.longtitude = longtitude;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 	public double getLatitude() {
 		return latitude;
@@ -84,20 +98,73 @@ public class HotelPO implements Serializable,IHotel {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-	@Transient
 	@Override
-	public long getDistance() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + cityCode;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + provinceCode;
+		result = prime * result
+				+ ((telephone == null) ? 0 : telephone.hashCode());
+		return result;
 	}
 	@Override
-	public String toString() {
-		return "HotelPO [id=" + id + ", name=" + name + ", address=" + address
-				+ ", description=" + description + ", provinceCode="
-				+ provinceCode + ", cityCode=" + cityCode + ", longtitude="
-				+ longtitude + ", latitude=" + latitude + ", telephone="
-				+ telephone + "]";
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		HotelPO other = (HotelPO) obj;
+		if (address == null) {
+			if (other.address != null)
+				return false;
+		} else if (!address.equals(other.address))
+			return false;
+		if (cityCode != other.cityCode)
+			return false;
+		if (description == null) {
+			if (other.description != null)
+				return false;
+		} else if (!description.equals(other.description))
+			return false;
+		if (id != other.id)
+			return false;
+		if (Double.doubleToLongBits(latitude) != Double
+				.doubleToLongBits(other.latitude))
+			return false;
+		if (Double.doubleToLongBits(longitude) != Double
+				.doubleToLongBits(other.longitude))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (provinceCode != other.provinceCode)
+			return false;
+		if (telephone == null) {
+			if (other.telephone != null)
+				return false;
+		} else if (!telephone.equals(other.telephone))
+			return false;
+		return true;
 	}
+	
+	
+	
+	
 	
 	
 

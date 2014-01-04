@@ -39,7 +39,7 @@ public class CorrectLntLat {
 				if(lntlat!=null){
 					po.setLatitude(lntlat.get("lng"));
 					po.setLatitude(lntlat.get("lat"));
-					manager.updateHotel(po);
+//					manager.updateHotel(hotel)(po);
 					logger_info.info("id = "+hotel.getId()+",lng = "+lntlat.get("lng")+",lat = "+lntlat.get("lat"));
 				}
 				else {
