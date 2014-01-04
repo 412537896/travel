@@ -27,7 +27,7 @@ import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.interfaces.IProvince;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 import com.weiminw.web.services.json.CityJsonAdapter;
 import com.weiminw.web.services.json.ProvinceJsonAdapter;
 @Path("hotels")

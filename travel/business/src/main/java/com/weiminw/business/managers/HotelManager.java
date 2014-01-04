@@ -30,14 +30,14 @@ import com.google.common.primitives.Doubles;
 import com.weiminw.business.aos.Hotel;
 import com.weiminw.business.exceptions.IllegalArgumentExceptionEnum;
 import com.weiminw.business.spatial.HotelSpatial;
-import com.weiminw.business.trans.PersistenceTransform;
+import com.weiminw.business.trans.HotelTransform;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public class HotelManager implements IHotelManager {
-	private final static MySqlPersistence<HotelPO> persistence = MySqlPersistence.create();
+	private final static MySqlPersistence<HotelEntity> persistence = MySqlPersistence.create();
 	private Logger logger = LogManager.getLogger(HotelManager.class);
 	
 //	/**
@@ -70,7 +70,7 @@ public class HotelManager implements IHotelManager {
 	public IHotel getHotelById(long id) {
 		Preconditions.checkArgument(id>0,IllegalArgumentExceptionEnum.ID_INVALID.getMessage());
 		
-		return Optional.fromNullable(persistence.getPersistenceObject(HotelPO.class, id)).transform(PersistenceTransform.getHotelTrans()).or(IHotel.NULL);
+		return Optional.fromNullable(persistence.getPersistenceObject(HotelEntity.class, id)).transform(HotelTransform.HotelEntity2Hotel()).or(IHotel.NULL);
 	}
 	
 	/**
@@ -78,8 +78,8 @@ public class HotelManager implements IHotelManager {
 	 */
 	@Override
 	public List<IHotel> getHotels() {
-		List<HotelPO> databaseResult = this.persistence.getPersistenceObjects("HotelPO.findAll");
-		return ImmutableList.copyOf(Collections2.transform(databaseResult, PersistenceTransform.getHotelTrans()));
+		List<HotelEntity> databaseResult = this.persistence.getPersistenceObjects("HotelEntity.findAll");
+		return ImmutableList.copyOf(Collections2.transform(databaseResult, HotelTransform.HotelEntity2Hotel()));
 	}
 	/**
 	 * ´´½¨HotelManagerÊµÀý
@@ -99,7 +99,7 @@ public class HotelManager implements IHotelManager {
 //		Map.Entry<String, Double> maxLntParam = Maps.immutableEntry("maxLnt", lnt + 0.05);
 //		Map.Entry<String, Double> minLatParam = Maps.immutableEntry("minLat", lat - 0.05);
 //		Map.Entry<String, Double> maxLatParam = Maps.immutableEntry("maxLat", lat + 0.05);
-//		List<IHotel> hotels = persistence.getPersistenceObjects("HotelPO.findPOI",
+//		List<IHotel> hotels = persistence.getPersistenceObjects("HotelEntity.findPOI",
 //				minLntParam,
 //				maxLntParam,
 //				minLatParam,
@@ -119,7 +119,7 @@ public class HotelManager implements IHotelManager {
 
 	@Override
 	public boolean updateHotel(IHotel hotel) {
-		HotelPO hotelPO = new HotelPO(hotel);
+		HotelEntity hotelPO = Optional.fromNullable(hotel).transform(HotelTransform.Hotel2HotelEntity()).or(new HotelEntity());
 		return this.persistence.updatePersistenceObject(hotelPO);
 	}
 

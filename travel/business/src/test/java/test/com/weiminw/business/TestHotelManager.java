@@ -13,7 +13,7 @@ import com.weiminw.business.aos.Hotel;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public class TestHotelManager {
 	IHotelManager manager = HotelManager.create();

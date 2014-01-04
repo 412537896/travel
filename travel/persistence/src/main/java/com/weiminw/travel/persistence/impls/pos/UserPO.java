@@ -72,5 +72,19 @@ public class UserPO implements Serializable,IUser {
 	}
 
 
+	@Override
+	public String getCellPhone() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public String getCloudPushKey() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

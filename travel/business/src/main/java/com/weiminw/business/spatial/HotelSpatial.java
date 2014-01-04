@@ -40,6 +40,9 @@ import com.spatial4j.core.shape.Shape;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.persistence.IPersistence;
+import com.weiminw.travel.persistence.impls.MySqlPersistence;
+import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
 
 
 public class HotelSpatial {
@@ -50,13 +53,14 @@ public class HotelSpatial {
 	private static final SpatialPrefixTree grid;
 	private static final PrefixTreeStrategy strategy;
 	private static final int MAX_TOP = 300;
+	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
 	static {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
 	
-	private static Document createHotelLntLatPoint(IHotel hotel) {
+	private static Document createHotelLntLatPoint(HotelSpatialEntity hotel) {
 	    Document doc = new Document();
 	    doc.add(new LongField("id", hotel.getId(), Field.Store.YES));
 	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLongitude(), hotel.getLatitude());
@@ -85,17 +89,18 @@ public class HotelSpatial {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		List<Long> ids = HotelSpatial.search(116.406887,39.98207, 2000000);
+		HotelSpatial.initIndex();
+		List<Long> ids = HotelSpatial.search(116.406887,39.98207, 5);
 		System.out.println(ids.toString());
 	}
 	
 	/**
 	 * ³õÊ¼»¯Ë÷Òý
 	 */
-	public static void buildIndex(List<IHotel> hotels) {
+	public static void initIndex(){
 		try {
 	    	IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(Version.LUCENE_46,null));
-	    	for(IHotel hotel:hotels){
+	    	for(HotelSpatialEntity hotel:persistence.getPersistenceObjects("HotelSpatialEntity.findAll")){
 	    		indexWriter.addDocument(createHotelLntLatPoint(hotel));
 	    	}
 
@@ -106,4 +111,19 @@ public class HotelSpatial {
 		}
 		
 	}
+	
+//	public static void buildIndex(List<IHotel> hotels) {
+//		try {
+//	    	IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(Version.LUCENE_46,null));
+//	    	for(IHotel hotel:hotels){
+//	    		indexWriter.addDocument(createHotelLntLatPoint(hotel));
+//	    	}
+//
+//			indexWriter.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//	}
 }

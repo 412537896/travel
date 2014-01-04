@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 import com.weiminw.travel.utils.LntLatCaculator;
 
 public class Hotel implements IHotel,Serializable {

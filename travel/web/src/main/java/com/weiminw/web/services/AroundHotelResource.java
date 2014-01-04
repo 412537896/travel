@@ -24,7 +24,7 @@ import com.weiminw.business.spatial.HotelSpatial;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 @Path("/around/hotels/")
 public class AroundHotelResource {

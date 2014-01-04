@@ -31,7 +31,7 @@ public class TestUserManager {
 
 	@Test
 	public void testGetUserByHid() {
-		List<IUser> user = manager.getUserByHid(10000442);
+		List<IUser> user = manager.getSellerByHid(10000442);
 		Assert.assertNotNull(user);
 		Assert.assertNotNull(user.size()>0);
 	}

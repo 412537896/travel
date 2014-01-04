@@ -20,7 +20,7 @@ import com.google.gson.Gson;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public class CorrectLntLat {
 	public class ResultWrapper {
@@ -33,7 +33,7 @@ public class CorrectLntLat {
 	public static void main(String[] args) throws ClientProtocolException, URISyntaxException, IOException  {
 		IHotelManager manager = HotelManager.create();
 		for(IHotel hotel:manager.getHotels()){
-			HotelPO po = (HotelPO) hotel;
+			HotelEntity po = (HotelEntity) hotel;
 			try {
 				Map<String,Double> lntlat = getLngLat(hotel.getAddress());
 				if(lntlat!=null){
@@ -57,7 +57,7 @@ public class CorrectLntLat {
 			}
 		}
 		
-//		HotelPO po = (HotelPO) manager.getHotelById(10000893L);
+//		HotelEntity po = (HotelEntity) manager.getHotelById(10000893L);
 //		Map<String,Double> lntlat = getLngLat(po.getName());
 //		po.setLongtitude(lntlat.get("lng"));
 //		po.setLatitude(lntlat.get("lat"));

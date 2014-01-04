@@ -34,8 +34,7 @@ public final class HotelApplicationContextListener implements ServletContextList
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent event) {
-    	IHotelManager hotelManager = HotelManager.create();
-    	HotelSpatial.buildIndex(hotelManager.getHotels());
+    	HotelSpatial.initIndex();
     }
 
 	/**

@@ -15,38 +15,6 @@
 			</basic>
 		</attributes>
 	</entity>
-	<entity class="HotelPO">
-		<table name="hotel">
-		</table>
-		<named-query name="HotelPO.findPOI">
-			<query>select H from HotelPO H  where H.longitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat</query>
-		</named-query>
-		<named-query name="HotelPO.findAll">
-			<query>select h from HotelPO h</query>
-		</named-query>
-		<attributes>
-			<id name="id">
-			</id>
-			<basic name="name">
-			</basic>
-			<basic name="address">
-			</basic>
-			<basic name="description">
-			</basic>
-			<basic name="longitude">
-			</basic>
-			<basic name="latitude">
-			</basic>
-			<basic name="telephone">
-			</basic>
-			<basic name="province">
-				<column name="province"/>
-			</basic>
-			<basic name="city">
-				<column name="city"/>
-			</basic>
-		</attributes>
-	</entity>
 	<entity class="RoomTypePO">
 		<attributes>
 			<id name="id">

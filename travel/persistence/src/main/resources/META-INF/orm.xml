@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+<?xml version="1.0" encoding="UTF-8"?><entity-mappings xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_5.xsd">
 	<persistence-unit-metadata>
 		<persistence-unit-defaults>
 			<access>PROPERTY</access>
@@ -13,38 +12,6 @@
 			<id name="id">
 			</id>
 			<basic name="url">
-			</basic>
-		</attributes>
-	</entity>
-	<entity class="HotelPO">
-		<table name="hotel">
-		</table>
-		<named-query name="HotelPO.findPOI">
-			<query>select H from HotelPO H where H.longtitude between :minLnt and :maxLnt and H.latitude between :minLat and :maxLat </query>
-		</named-query>
-		<named-query name="HotelPO.findAll">
-			<query>select h from HotelPO h</query>
-		</named-query>
-		<attributes>
-			<id name="id">
-			</id>
-			<basic name="name">
-			</basic>
-			<basic name="address">
-			</basic>
-			<basic name="description">
-			</basic>
-			<basic name="provinceCode">
-				<column name="province"/>
-			</basic>
-			<basic name="cityCode">
-				<column name="city"/>
-			</basic>
-			<basic name="longtitude">
-			</basic>
-			<basic name="latitude">
-			</basic>
-			<basic name="telephone">
 			</basic>
 		</attributes>
 	</entity>
@@ -80,8 +47,10 @@
 			</basic>
 			<basic name="name">
 			</basic>
-			<basic name="type">
-			</basic>
+		
+		
 		</attributes>
 	</entity>
+	
+	
 </entity-mappings>

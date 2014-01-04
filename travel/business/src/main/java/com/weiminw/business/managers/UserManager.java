@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
+import com.weiminw.business.trans.UserTransform;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.interfaces.IUserManager;
@@ -24,7 +25,7 @@ public final class UserManager implements IUserManager{
 	}
 	
 	@Override
-	public List<IUser> getUserByHid(long id) {
+	public List<IUser> getSellerByHid(long id) {
 		// TODO Auto-generated method stub
 		Map.Entry<String,Long> queryParameters = Maps.immutableEntry("1", id);
 		return persistence.getPersistenceObjects("UserPO.findAllByHid", queryParameters);
@@ -44,6 +45,19 @@ public final class UserManager implements IUserManager{
 				Maps.immutableEntry("4", maxLat)
 		);
 		return sellers;
+	}
+	@Override
+	public IUser addUser(IUser user) {
+		// TODO Auto-generated method stub
+		UserPO po = Optional.fromNullable(user).transform(UserTransform.User2UserEntity()).or(new UserPO());
+		persistence.insertPersistenceObjects(po);
+		return po;
+	}
+	@Override
+	public IUser addSeller(IUser user) {
+		// TODO Auto-generated method stub
+		return null;
+		
 	}
 	
 	

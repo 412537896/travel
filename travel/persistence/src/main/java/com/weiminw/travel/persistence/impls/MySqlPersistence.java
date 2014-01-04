@@ -11,7 +11,7 @@ import javax.persistence.Query;
 
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.persistence.IPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelPO;
+import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public final class MySqlPersistence<T> implements IPersistence<T> {
 	private static final EntityManagerFactory factory = Persistence.createEntityManagerFactory("travel");
@@ -53,7 +53,10 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	
 	public boolean insertPersistenceObjects(T object){
 		EntityManager manager = factory.createEntityManager();
-		return false;
+		manager.getTransaction().begin();
+		manager.persist(object);
+		manager.getTransaction().commit();
+		return true;
 	}
 	
 	public boolean updatePersistenceObject(T object){
@@ -67,7 +70,7 @@ public final class MySqlPersistence<T> implements IPersistence<T> {
 	}
 	public static void main(String[] args) {
 		EntityManager manager = factory.createEntityManager();
-		HotelPO po = manager.find(HotelPO.class, 10000893L);
+		HotelEntity po = manager.find(HotelEntity.class, 10000893L);
 		po.setLongitude(8);
 		manager = factory.createEntityManager();
 		manager.getTransaction().begin();
