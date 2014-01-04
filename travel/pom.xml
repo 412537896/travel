@@ -12,6 +12,7 @@
     <module>client</module>
     <module>persistence</module>
     <module>business</module>
+    <module>push</module>
   </modules>
   <dependencyManagement>
   	<dependencies>
