@@ -3,10 +3,10 @@ package com.weiminw.travel.interfaces;
 import java.io.Serializable;
 import java.util.Date;
 
-public interface IReservationRequestMessage {
-	public static final IReservationRequestMessage NULL = new Null();
+public interface IReservationRequest {
+	public static final IReservationRequest NULL = new Null();
 	
-	public final static class Null implements IReservationRequestMessage,Serializable {
+	public final static class Null implements IReservationRequest,Serializable {
 		/**
 		 * 
 		 */
