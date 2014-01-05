@@ -31,6 +31,7 @@ import org.apache.lucene.spatial.query.SpatialOperation;
 import org.apache.lucene.store.RAMDirectory;
 import org.apache.lucene.util.Version;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.spatial4j.core.context.SpatialContext;
@@ -71,21 +72,27 @@ public class HotelSpatial {
 	  }
 
 	
-	public static List<Long> search(double lnt,double lat,int radius) throws IOException{
-		Point pt = SpatialContext.GEO.makePoint(lat, lat);
-		double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM);
-	    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
-		IndexReader indexReader = DirectoryReader.open(directory);
-		IndexSearcher indexSearcher = new IndexSearcher(indexReader);
-		Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
-		SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(radius, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
-		Filter filter = strategy.makeFilter(args);
-		TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, MAX_TOP, distSort);
-		List<Long> hotelIds = Lists.newArrayListWithExpectedSize(docs.totalHits);
-		for(ScoreDoc doc:docs.scoreDocs){
-			hotelIds.add(indexSearcher.doc(doc.doc).getField("id").numericValue().longValue());
+	public static List<Long> search(double lnt,double lat,int radius){
+		try {
+			Point pt = SpatialContext.GEO.makePoint(lat, lat);
+			double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM);
+		    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
+			IndexReader indexReader = DirectoryReader.open(directory);
+			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
+			Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
+			SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(radius, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
+			Filter filter = strategy.makeFilter(args);
+			TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, MAX_TOP, distSort);
+			List<Long> hotelIds = Lists.newArrayListWithExpectedSize(docs.totalHits);
+			for(ScoreDoc doc:docs.scoreDocs){
+				hotelIds.add(indexSearcher.doc(doc.doc).getField("id").numericValue().longValue());
+			}
+			return hotelIds;
 		}
-		return hotelIds;
+		catch(IOException e){
+			return ImmutableList.of();
+		}
+		
 	}
 	
 	public static void main(String[] args) throws IOException {

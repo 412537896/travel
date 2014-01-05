@@ -1,6 +1,7 @@
 package com.weiminw.travel.persistence.impls.pos;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,7 +11,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="hotel")
-@NamedQuery(name="HotelEntity.findAll", query="SELECT h FROM HotelEntity h")
+@NamedQueries(value = {
+		@NamedQuery(name="HotelEntity.findAll", query="SELECT h FROM HotelEntity h")
+		
+		
+})
+
 public class HotelEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private long id;

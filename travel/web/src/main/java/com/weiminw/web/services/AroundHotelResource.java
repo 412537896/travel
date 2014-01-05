@@ -47,23 +47,20 @@ public class AroundHotelResource {
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
 	public String getHotels_1(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat,@QueryParam("start") int start){
 		List<Long> hotelIds;
-		try {
-			hotelIds = HotelSpatial.search(lnt, lat, 5);
-			Collection<IHotel> hotels = Collections2.transform(hotelIds, new Function<Long,IHotel>(){
+		
+		hotelIds = HotelSpatial.search(lnt, lat, 5);
+		Collection<IHotel> hotels = Collections2.transform(hotelIds, new Function<Long,IHotel>(){
 
-				@Override
-				public IHotel apply(Long input) {
-					// TODO Auto-generated method stub
-					return hotelManager.getHotelById(input);
-				}
-				
-				
-			});
-			return gson.toJson(hotels);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			return "";
-		}
+			@Override
+			public IHotel apply(Long input) {
+				// TODO Auto-generated method stub
+				return hotelManager.getHotelById(input);
+			}
+			
+			
+		});
+		return gson.toJson(hotels);
+		
 		
 		
 	}

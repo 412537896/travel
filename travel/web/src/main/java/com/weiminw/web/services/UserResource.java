@@ -7,7 +7,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.weiminw.business.aos.User;
+import com.weiminw.business.aos.Seller;
 import com.weiminw.business.managers.UserManager;
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.interfaces.IUserManager;
@@ -20,13 +20,19 @@ public class UserResource {
 	@POST
 	public Response createUser(@FormParam(value = "name") String name,
 			@FormParam(value="cellPhone") String cellPhone,
-			@FormParam(value="cloudPushKey") String cloudPushKey,
-			@FormParam(value = "userType") String userType){
-		IUser user = User.builder()
+			@FormParam(value="cloudPushCk") String cloudPushCk,
+			@FormParam(value="cloudPushUk") String cloudPushUk,
+			@FormParam(value="cloudPushTag") String cloudPushTag,
+			@FormParam(value="fixTelephone") String fixTelephone){
+		IUser user = Seller.builder()
 				.setName(name)
 				.setCellPhone(cellPhone)
-				.setCloudPushKey(cloudPushKey).build();
-		user = manager.addUser(user);
+				.setCloudPushCk(cloudPushCk)
+				.setCloudPushTag(cloudPushTag)
+				.setCloudPushUk(cloudPushUk)
+				.setFixTelephone(fixTelephone)
+				.setName(name).build();
+		user = manager.addSeller(user);
 		if(user!=null){
 			return Response.created(uriInfo.getRequestUri().resolve(String.valueOf(user.getId()))).build();
 		}

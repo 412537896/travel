@@ -2,7 +2,7 @@ package com.weiminw.travel.interfaces;
 
 
 public interface IUser {
-	public static final IUser NULL = new Null();
+	public static final IUser NONE = new Null();
 
 	public static final class Null implements IUser {
 
@@ -13,34 +13,56 @@ public interface IUser {
 		}
 
 		@Override
-		public String getName() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
-		public String getFixLine() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		@Override
 		public String getCellPhone() {
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		@Override
-		public String getCloudPushKey() {
+		public String getCloudPushCk() {
 			// TODO Auto-generated method stub
 			return null;
 		}
+
+		@Override
+		public String getCloudPushTag() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getCloudPushUk() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getFixTelephone() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		
 		
 	}
 	
 	public long getId() ;
-	public String getName() ;
-	public String getFixLine();
+
 	public String getCellPhone();
-	public String getCloudPushKey() ;
+
+	public String getCloudPushCk();
+
+	public String getCloudPushTag();
+
+	public String getCloudPushUk() ;
+
+	public String getFixTelephone() ;
+
+	public String getName() ;
 }

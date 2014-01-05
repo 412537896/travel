@@ -1,6 +1,7 @@
 package com.weiminw.travel.persistence.impls.pos;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -10,8 +11,14 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="geo_code_name_map")
-@NamedQuery(name="GeoCodeNameMap.findAll", query="SELECT g FROM GeoCodeNameMap g")
-public class GeoCodeNameMap implements Serializable {
+@NamedQueries(value = { 
+		
+		@NamedQuery(name="GeoEntity.findAll", query="SELECT g FROM GeoEntity g"),
+		@NamedQuery(name="HotelEntity.findProvince", query="SELECT g FROM GeoEntity g where g.provinceCode = :provinceCode group by g.provinceCode ")		
+		
+})
+
+public class GeoEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String cityAbbName;
@@ -23,7 +30,7 @@ public class GeoCodeNameMap implements Serializable {
 	private int provinceCode;
 	private String provinceName;
 
-	public GeoCodeNameMap() {
+	public GeoEntity() {
 	}
 
 

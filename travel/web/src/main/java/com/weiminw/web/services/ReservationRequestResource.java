@@ -18,7 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Lists;
-import com.weiminw.business.aos.User;
+import com.weiminw.business.aos.Seller;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.business.managers.ReservationMessageFactory;
 import com.weiminw.business.managers.UserManager;
@@ -34,6 +34,7 @@ public class ReservationRequestResource {
 	@Context
 	UriInfo uriInfo;
 	IHotelManager hotelManager = HotelManager.create();
+	
 	IUserManager userManager = UserManager.create();
 	private final static Logger logger = LogManager.getLogger(ReservationRequestResource.class);
 	@Path("/")
@@ -55,10 +56,14 @@ public class ReservationRequestResource {
 //				message.send();
 //			}
 //		}
-		List<IUser> users = this.userManager.getSellerByLntLat(lnt, lat);
-		for(IUser user:users){
-			IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
-			message.send();
+		List<IHotel> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat, 0);
+				
+		for(IHotel hotel:hotels){
+			List<IUser> users = this.userManager.getSellerByHid(hotel.getId());
+			for(IUser user:users){
+				IReservationRequestMessage message = ReservationMessageFactory.createRequestMessage(user, user);
+				message.send();
+			}
 		}
 		return Response.created(uriInfo.getRequestUri().resolve(UUID.randomUUID().toString())).build();
 		

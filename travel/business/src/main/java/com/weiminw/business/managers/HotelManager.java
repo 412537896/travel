@@ -111,11 +111,6 @@ public class HotelManager implements IHotelManager {
 //		return FluentIterable.from(filteredHotels).limit(20).toList();
 //	}
 //
-//	@Override
-//	public List<IHotel> getHotelsByLntLat(double lnt, double lat, int start) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 	@Override
 	public boolean updateHotel(IHotel hotel) {
@@ -125,18 +120,15 @@ public class HotelManager implements IHotelManager {
 
 	@Override
 	public List<IHotel> getHotelsByLntLat(double lnt, double lat, int start) {
-		try {
+		
 			List<Long> ids = HotelSpatial.search(lnt, lat, 5);
-			List<IHotel> hotels = Lists.newArrayListWithCapacity(50);
-			for(long id:ids.subList(0, 50)){
+			int size = Math.min(50, ids.size());
+			List<IHotel> hotels = Lists.newArrayListWithCapacity(size);
+			for(long id:ids.subList(0, size)){
 				hotels.add(this.getHotelById(id));
 			}
 			return hotels;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Lists.newArrayList();
+		
 	}
 
 }

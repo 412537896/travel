@@ -26,7 +26,7 @@ public class TestUserManager {
 	@Test
 	public void testGetUserById() {
 		IUser user = manager.getUserById(1);
-		Assert.assertNotEquals(user, IUser.NULL);
+		Assert.assertNotEquals(user, IUser.NONE);
 	}
 
 	@Test
@@ -35,12 +35,12 @@ public class TestUserManager {
 		Assert.assertNotNull(user);
 		Assert.assertNotNull(user.size()>0);
 	}
-	@Test
-	public void testGetSellerByLntLat(){
-		List<IUser> users = manager.getSellerByLntLat(116.406887,39.98207);
-		Assert.assertNotNull(users);
-		System.out.println(users);
-	}
+//	@Test
+//	public void testGetSellerByLntLat(){
+//		List<IUser> users = manager.getSellerByLntLat(116.406887,39.98207);
+//		Assert.assertNotNull(users);
+//		System.out.println(users);
+//	}
 
 }
 
