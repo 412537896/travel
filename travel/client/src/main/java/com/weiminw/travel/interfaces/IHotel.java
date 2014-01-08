@@ -7,13 +7,11 @@ import com.google.common.base.Objects;
 public interface IHotel extends Serializable {
 	public long getId();
 	public String getName();
-	public String getAddress();
-	public double getLongitude();
-	public double getLatitude();
 	public String getTelephone();
 	public String getDescription();
-	public int getProvince();
-	public int getCity();
+	public IAddress getAddress();
+	public ILocation getLocation();
+	
 	public final static IHotel NULL = new Null();
 
 	static final class Null implements IHotel {
@@ -25,57 +23,38 @@ public interface IHotel extends Serializable {
 		public Null() {
 			// TODO Auto-generated constructor stub
 		}
-
-		public long getId() {
-			return -1L;
-		}
-
-		public String getName() {
-			return "";
-		}
-
-		public String getAddress() {
-			return "";
-		}
-
-		public double getLongtitude() {
-			return -1D;
-		}
-
-		public double getLatitude() {
-			return -1D;
-		}
-
-		public String getTelephone() {
-			return "";
-		}
-		
 		@Override
-		public double getLongitude() {
+		public long getId() {
 			// TODO Auto-generated method stub
 			return 0;
 		}
-
+		@Override
+		public String getName() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public String getTelephone() {
+			// TODO Auto-generated method stub
+			return null;
+		}
 		@Override
 		public String getDescription() {
 			// TODO Auto-generated method stub
-			return "";
+			return null;
 		}
-		public String toString(){
-			return Objects.toStringHelper(this).toString();
+		@Override
+		public IAddress getAddress() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		@Override
+		public ILocation getLocation() {
+			// TODO Auto-generated method stub
+			return null;
 		}
 
-		@Override
-		public int getProvince() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
-		@Override
-		public int getCity() {
-			// TODO Auto-generated method stub
-			return 0;
-		}
+		
 		
 
 	};

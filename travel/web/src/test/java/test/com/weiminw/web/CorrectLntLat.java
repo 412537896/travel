@@ -31,7 +31,7 @@ public class CorrectLntLat {
 	public static final Logger logger_info = LogManager.getLogger("info");
 	public static final Logger logger_error = LogManager.getLogger("error");
 	public static void main(String[] args) throws ClientProtocolException, URISyntaxException, IOException  {
-		IHotelManager manager = HotelManager.create();
+		/*IHotelManager manager = HotelManager.create();
 		for(IHotel hotel:manager.getHotels()){
 			HotelEntity po = (HotelEntity) hotel;
 			try {
@@ -55,7 +55,7 @@ public class CorrectLntLat {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
+		}*/
 		
 //		HotelEntity po = (HotelEntity) manager.getHotelById(10000893L);
 //		Map<String,Double> lntlat = getLngLat(po.getName());

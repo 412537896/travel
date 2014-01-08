@@ -14,7 +14,8 @@ import javax.persistence.*;
 @NamedQueries(value = { 
 		
 		@NamedQuery(name="GeoEntity.findAll", query="SELECT g FROM GeoEntity g"),
-		@NamedQuery(name="HotelEntity.findProvince", query="SELECT g FROM GeoEntity g where g.provinceCode = :provinceCode group by g.provinceCode ")		
+		@NamedQuery(name="GeoEntity.findProvince", query="SELECT g FROM GeoEntity g where g.provinceCode = :provinceCode group by g.provinceCode ")	,	
+		@NamedQuery(name="GeoEntity.findCity", query="SELECT g FROM GeoEntity g where g.cityCode = :cityCode group by g.cityCode ")		
 		
 })
 
