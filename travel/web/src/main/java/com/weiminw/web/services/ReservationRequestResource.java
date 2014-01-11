@@ -26,6 +26,7 @@ import com.weiminw.business.managers.HotelManager;
 import com.weiminw.business.managers.UserManager;
 import com.weiminw.business.workers.NotifyMessageSendWorker;
 import com.weiminw.travel.interfaces.IHotel;
+import com.weiminw.travel.interfaces.IHotelLocation;
 import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.interfaces.IReservationRequest;
 import com.weiminw.travel.interfaces.IUser;
@@ -49,10 +50,10 @@ public class ReservationRequestResource {
 			@FormParam("lnt") double lnt,/*用户指定经度*/
 			@FormParam("lat") double lat /*用户指定维度 */) {
 		String uuid = UUID.randomUUID().toString();
-		List<IHotel> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat, 0);
+		List<IHotelLocation> hotels = this.hotelManager.getHotelsByLntLat(lnt, lat, 0);
 		logger.debug("找到附近 "+hotels.size()+" 家酒店");
 		stopwatch.start();		
-		for(IHotel hotel:hotels){
+		for(IHotelLocation hotel:hotels){
 			List<IUser> users = this.userManager.getSellerByHid(hotel.getId());
 			for(IUser user:users){
 				IReservationRequest message = HotelReservationRequest.create(user, user);

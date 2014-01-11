@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 import com.google.gson.Gson;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
+import com.weiminw.travel.interfaces.IHotelLocation;
 import com.weiminw.travel.interfaces.IHotelManager;
 
 @Path("/around/hotels/")
@@ -31,7 +32,7 @@ public class AroundHotelResource {
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
 	public String getHotels(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat,@QueryParam("start") int start){
 		logger.error(uriInfo.getPath());
-		List<IHotel> hotels = hotelManager.getHotelsByLntLat(lnt,lat,0);
+		List<IHotelLocation> hotels = hotelManager.getHotelsByLntLat(lnt,lat,0);
 		return gson.toJson(hotels);
 	}
 }
