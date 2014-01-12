@@ -12,7 +12,7 @@ public class Location implements ILocation {
 	}
 
 	public static Location of(double longitude, double latitude){
-		return new Location(latitude, latitude);
+		return new Location(longitude, latitude);
 	}
 	@Override
 	public double getLongitude() {
