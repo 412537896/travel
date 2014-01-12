@@ -123,7 +123,7 @@ public class HotelManager implements IHotelManager {
 	@Override
 	public List<IHotelLocation> getHotelsByLntLat(double lnt, double lat, int start) {
 		
-			List<Long> ids = HotelSpatial.search(lnt, lat, 5);
+			List<Long> ids = HotelSpatial.search(lnt, lat, 1);
 			int size = Math.min(50, ids.size());
 			List<IHotel> hotels = Lists.newArrayListWithCapacity(size);
 			for(long id:ids.subList(0, size)){

@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.weiminw.business.aos.Hotel;
+import com.weiminw.business.aos.Location;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelManager;
@@ -40,8 +41,8 @@ public class TestHotelManager {
 	@Test
 	public void testUpdateHotel(){
 		IHotel hotel =  this.manager.getHotelById(10000893);
-//		hotel = Hotel.builder(hotel)(location)longitude(2D).build();
-//		this.manager.updateHotel(hotel);
+		hotel = Hotel.builder(hotel).location(Location.of(hotel.getLocation().getLongitude(), 4D)).build();
+		this.manager.updateHotel(hotel);
 //		IHotel nhotel = this.manager.getHotelById(10000893);
 //		System.out.println(nhotel);
 //		Assert.assertEquals(nhotel.getLongitude(), 2D);

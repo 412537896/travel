@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.IntField;
 import org.apache.lucene.document.LongField;
@@ -13,6 +16,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.queries.function.ValueSource;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
@@ -47,13 +51,14 @@ import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
 
 
 public class HotelSpatial {
+	private static final Logger logger = LogManager.getLogger(HotelSpatial.class);
 	/**
 	 * Ë÷ÒýÄÚ´æ
 	 */
 	private static final RAMDirectory directory = new RAMDirectory();
 	private static final SpatialPrefixTree grid;
 	private static final PrefixTreeStrategy strategy;
-	private static final int MAX_TOP = 300;
+	private static final int MAX_TOP = 3000;
 	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
 	static {
 		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
@@ -64,9 +69,11 @@ public class HotelSpatial {
 	private static Document createHotelLntLatPoint(HotelSpatialEntity hotel) {
 	    Document doc = new Document();
 	    doc.add(new LongField("id", hotel.getId(), Field.Store.YES));
-	    Shape shape = SpatialContext.GEO.makePoint(hotel.getLongitude(), hotel.getLatitude());
+	    Point shape = SpatialContext.GEO.makePoint(hotel.getLongitude(), hotel.getLatitude());
 	    for (Field f : strategy.createIndexableFields(shape)) {
 	    	doc.add(f);
+	    	doc.add(new DoubleField("lnt",  shape.getX(),Field.Store.YES));
+	    	doc.add(new DoubleField("lat",  shape.getY(),Field.Store.YES));
 	    }
 	    return doc;
 	  }
@@ -86,6 +93,12 @@ public class HotelSpatial {
 			List<Long> hotelIds = Lists.newArrayListWithExpectedSize(docs.totalHits);
 			for(ScoreDoc doc:docs.scoreDocs){
 				hotelIds.add(indexSearcher.doc(doc.doc).getField("id").numericValue().longValue());
+				double lnt_hotel =  indexSearcher.doc(doc.doc).getField("lnt").numericValue().doubleValue();
+				double lat_hotel =  indexSearcher.doc(doc.doc).getField("lat").numericValue().doubleValue();
+				Point hotelPoint = SpatialContext.GEO.makePoint(lnt_hotel, lat_hotel);
+				double distance = SpatialContext.GEO.getDistCalc().distance(hotelPoint, lnt, lat);
+				logger.debug(hotelPoint + " distance = "+ distance);
+				
 			}
 			return hotelIds;
 		}
