@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.weiminw.business.managers.UserManager;
 import com.weiminw.travel.interfaces.IUser;
-import com.weiminw.travel.interfaces.IUserManager;
+import com.weiminw.travel.interfaces.managers.IUserManager;
 
 public class TestUserManager {
 	IUserManager manager = new UserManager();

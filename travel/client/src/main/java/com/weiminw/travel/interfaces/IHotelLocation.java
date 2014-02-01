@@ -2,7 +2,7 @@ package com.weiminw.travel.interfaces;
 
 public interface IHotelLocation {
 	public long getId();
-	public long getName();
+	public String getName();
 	public double getLongitude();
 	public double getLatitude();
 	public static final IHotelLocation NONE = new Null();
@@ -15,9 +15,9 @@ public interface IHotelLocation {
 		}
 
 		@Override
-		public long getName() {
+		public String getName() {
 			// TODO Auto-generated method stub
-			return 0;
+			return "";
 		}
 
 		@Override

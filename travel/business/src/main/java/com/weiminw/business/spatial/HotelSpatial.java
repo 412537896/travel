@@ -44,7 +44,7 @@ import com.spatial4j.core.shape.Point;
 import com.spatial4j.core.shape.Shape;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 import com.weiminw.travel.persistence.IPersistence;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
@@ -61,7 +61,6 @@ public class HotelSpatial {
 	private static final int MAX_TOP = 3000;
 	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
 	static {
-		Map<String,String> args = Maps.newHashMapWithExpectedSize(3);
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
@@ -81,14 +80,16 @@ public class HotelSpatial {
 	
 	public static List<Long> search(double lnt,double lat,int radius){
 		try {
-			Point pt = SpatialContext.GEO.makePoint(lat, lat);
-			double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM);
-		    ValueSource valueSource = strategy.makeDistanceValueSource(pt, degToM);//the distance (in m)
+			Point pt = SpatialContext.GEO.makePoint(lnt, lat);
+			SpatialArgs args = new SpatialArgs(SpatialOperation.IsWithin, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(radius, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
+			Filter filter = strategy.makeFilter(args);
+			
+			double degToM = DistanceUtils.degrees2Dist(1, DistanceUtils.EARTH_MEAN_RADIUS_KM);	
+		    ValueSource valueSource = strategy.makeDistanceValueSource(pt);//the distance (in m)
 			IndexReader indexReader = DirectoryReader.open(directory);
 			IndexSearcher indexSearcher = new IndexSearcher(indexReader);
 			Sort distSort = new Sort(valueSource.getSortField(false)).rewrite(indexSearcher);//false=asc dist
-			SpatialArgs args = new SpatialArgs(SpatialOperation.Intersects, SpatialContext.GEO.makeCircle(lnt, lat, DistanceUtils.dist2Degrees(radius, DistanceUtils.EARTH_MEAN_RADIUS_KM)));
-			Filter filter = strategy.makeFilter(args);
+
 			TopDocs docs = indexSearcher.search(new MatchAllDocsQuery(), filter, MAX_TOP, distSort);
 			List<Long> hotelIds = Lists.newArrayListWithExpectedSize(docs.totalHits);
 			for(ScoreDoc doc:docs.scoreDocs){

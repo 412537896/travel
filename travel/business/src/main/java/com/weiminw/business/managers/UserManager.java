@@ -12,7 +12,7 @@ import com.google.common.collect.Maps;
 import com.weiminw.business.aos.Seller;
 import com.weiminw.business.trans.UserTransform;
 import com.weiminw.travel.interfaces.IUser;
-import com.weiminw.travel.interfaces.IUserManager;
+import com.weiminw.travel.interfaces.managers.IUserManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.SellerEntity;
 

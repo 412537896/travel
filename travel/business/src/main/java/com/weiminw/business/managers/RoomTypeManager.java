@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.weiminw.travel.interfaces.IRoomType;
-import com.weiminw.travel.interfaces.IRoomTypeManager;
+import com.weiminw.travel.interfaces.managers.IRoomTypeManager;
 import com.weiminw.travel.persistence.IPersistence;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;

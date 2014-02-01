@@ -16,6 +16,7 @@ import java.util.Map;
 
 
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +35,7 @@ import com.weiminw.business.spatial.HotelSpatial;
 import com.weiminw.business.trans.HotelTransform;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelLocation;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
@@ -123,10 +124,11 @@ public class HotelManager implements IHotelManager {
 	@Override
 	public List<IHotelLocation> getHotelsByLntLat(double lnt, double lat, int start) {
 		
-			List<Long> ids = HotelSpatial.search(lnt, lat, 1);
+			List<Long> ids = HotelSpatial.search(lnt, lat, 5);
 			int size = Math.min(50, ids.size());
 			List<IHotel> hotels = Lists.newArrayListWithCapacity(size);
 			for(long id:ids.subList(0, size)){
+				IHotel hotel = this.getHotelById(id);
 				hotels.add(this.getHotelById(id));
 			}
 			List<IHotelLocation> hotelsLocation = FluentIterable.from(hotels).transform(HotelTransform.Hotel2HotelLocation()).toList();

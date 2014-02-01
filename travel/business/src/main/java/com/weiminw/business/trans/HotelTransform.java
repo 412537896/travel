@@ -1,5 +1,8 @@
 package com.weiminw.business.trans;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Function;
 import com.weiminw.business.aos.Address;
 import com.weiminw.business.aos.Hotel;
@@ -11,6 +14,7 @@ import com.weiminw.travel.interfaces.IHotelLocation;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public final class HotelTransform {
+	private static final Logger logger = LogManager.getLogger(HotelTransform.class);
 	private static final GeoManager manager = new GeoManager();
 	private static final Function<HotelEntity,IHotel>  HotelEntity2Hotel = new Function<HotelEntity,IHotel>(){
 		@Override

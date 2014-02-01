@@ -1,6 +1,8 @@
-package com.weiminw.travel.interfaces;
+package com.weiminw.travel.interfaces.managers;
 
 import java.util.List;
+
+import com.weiminw.travel.interfaces.IRoomType;
 
 public interface IRoomTypeManager {
 	IRoomType getRoomTypeById(long id);

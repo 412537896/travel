@@ -20,25 +20,25 @@ public class HotelLocation implements IHotelLocation {
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
 	@Override
-	public long getName() {
+	public String getName() {
 		// TODO Auto-generated method stub
-		return 0;
+		return name;
 	}
 
 	@Override
 	public double getLongitude() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.longitude;
 	}
 
 	@Override
 	public double getLatitude() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.latitude;
 	}
 
 }
