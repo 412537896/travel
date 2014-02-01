@@ -18,7 +18,7 @@ import com.google.gson.Gson;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelLocation;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 @Path("/around/hotels/")
 public class AroundHotelResource {

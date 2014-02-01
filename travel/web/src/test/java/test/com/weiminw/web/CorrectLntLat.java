@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public class CorrectLntLat {

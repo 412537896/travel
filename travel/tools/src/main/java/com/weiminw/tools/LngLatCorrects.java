@@ -26,7 +26,7 @@ import com.weiminw.business.aos.Location;
 import com.weiminw.business.managers.GeoManager;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
 
@@ -98,7 +98,7 @@ public class LngLatCorrects {
 					Map result = (Map) map.get("result");
 					result.put("name", this.hotel.getName());
 					if(result!=null&&result.containsKey("location")){
-						Map location = (Map) result.get("location");
+						Map<Double,Double> location = (Map) result.get("location");
 						if(location!=null){
 							double lng = (double) location.get("lng");
 							double lat = (double) location.get("lat");

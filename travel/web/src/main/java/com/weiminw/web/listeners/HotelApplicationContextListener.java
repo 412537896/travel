@@ -9,12 +9,13 @@ import javax.servlet.ServletContextListener;
 
 
 
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.business.spatial.HotelSpatial;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 /**
  * Application Lifecycle Listener implementation class ApplicatoinShutdownListener
