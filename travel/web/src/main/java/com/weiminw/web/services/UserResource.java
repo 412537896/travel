@@ -10,7 +10,7 @@ import com.weiminw.business.aos.Seller;
 import com.weiminw.business.aos.User;
 import com.weiminw.business.managers.UserManager;
 import com.weiminw.travel.interfaces.IUser;
-import com.weiminw.travel.interfaces.IUserManager;
+import com.weiminw.travel.interfaces.managers.IUserManager;
 @Path("/users")
 public class UserResource {
 	IUserManager manager = UserManager.create();

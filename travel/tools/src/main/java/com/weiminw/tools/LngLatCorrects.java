@@ -26,7 +26,7 @@ import com.weiminw.business.aos.Location;
 import com.weiminw.business.managers.GeoManager;
 import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
 

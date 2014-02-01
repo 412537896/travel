@@ -27,10 +27,10 @@ import com.weiminw.business.managers.UserManager;
 import com.weiminw.business.workers.NotifyMessageSendWorker;
 import com.weiminw.travel.interfaces.IHotel;
 import com.weiminw.travel.interfaces.IHotelLocation;
-import com.weiminw.travel.interfaces.IHotelManager;
 import com.weiminw.travel.interfaces.IReservationRequest;
 import com.weiminw.travel.interfaces.IUser;
-import com.weiminw.travel.interfaces.IUserManager;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
+import com.weiminw.travel.interfaces.managers.IUserManager;
 
 @Path("/reservation/request")
 public class ReservationRequestResource {
