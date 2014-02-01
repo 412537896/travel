@@ -13,7 +13,7 @@
     <module>persistence</module>
     <module>business</module>
     <module>push</module>
-    <module>tools</module>
+    
   </modules>
   <dependencyManagement>
   	<dependencies>
