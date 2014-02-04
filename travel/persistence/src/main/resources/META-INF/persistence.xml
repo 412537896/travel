@@ -5,6 +5,7 @@
 		<class>com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity</class>
 		<class>com.weiminw.travel.persistence.impls.pos.SellerEntity</class>
 		<class>com.weiminw.travel.persistence.impls.pos.GeoEntity</class>
+		<class>com.weiminw.travel.persistence.impls.pos.UserEntity</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://115.28.129.120:3306/travel"/>
 			<property name="javax.persistence.jdbc.user" value="admin"/>

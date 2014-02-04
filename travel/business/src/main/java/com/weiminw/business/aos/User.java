@@ -1,5 +1,6 @@
 package com.weiminw.business.aos;
 
+import com.google.common.base.Objects;
 import com.weiminw.travel.interfaces.IUser;
 
 public class User implements IUser {
@@ -98,43 +99,54 @@ public class User implements IUser {
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return 0;
+		return this.id;
 	}
 
 	@Override
 	public String getCellPhone() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.cellPhone;
 	}
 
 	@Override
 	public String getCloudPushCk() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.cloudPushCk;
 	}
 
 	@Override
 	public String getCloudPushTag() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.cloudPushTag;
 	}
 
 	@Override
 	public String getCloudPushUk() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.cloudPushUk;
 	}
 
 	@Override
 	public String getFixTelephone() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.fixTelephone;
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.name;
+	}
+	
+	public String toString(){
+		return Objects.toStringHelper(this).add("id", id)
+		.add("name", name)
+		.add("cellPhone", cellPhone)
+		.add("fixTelephone", fixTelephone)
+		.add("cloudPushCk", cloudPushCk)
+		.add("cloudPushUk", cloudPushUk)
+		.add("cloudPushTag", cloudPushTag)
+		.toString();
 	}
 
 }

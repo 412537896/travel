@@ -4,20 +4,27 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.weiminw.business.aos.Seller;
+import com.weiminw.business.aos.User;
 import com.weiminw.business.trans.UserTransform;
 import com.weiminw.travel.interfaces.IUser;
 import com.weiminw.travel.interfaces.managers.IUserManager;
 import com.weiminw.travel.persistence.impls.MySqlPersistence;
 import com.weiminw.travel.persistence.impls.pos.SellerEntity;
+import com.weiminw.travel.persistence.impls.pos.UserEntity;
 
 public final class UserManager implements IUserManager{
+	private static final Logger logger = LogManager.getLogger(UserManager.class);
 	final static MySqlPersistence<SellerEntity> persistence = MySqlPersistence.create();
+	final static MySqlPersistence<UserEntity> persistencew = MySqlPersistence.create();
 	public static IUserManager create() {
 		// TODO Auto-generated method stub
 		return new UserManager();
@@ -66,6 +73,17 @@ public final class UserManager implements IUserManager{
 		SellerEntity entity = Optional.of(seller).transform(UserTransform.Seller2SellerEntity()).get();
 		boolean success = this.persistence.insertPersistenceObjects(entity);
 		return  Optional.of(entity).transform(UserTransform.SellerEntity2Seller()).get();
+		
+	}
+	
+	public IUser addUser(IUser user) {
+		// TODO Auto-generated method stub
+		Preconditions.checkNotNull(user);
+		User user1 = (User) user;
+		UserEntity entity = Optional.of(user1).transform(UserTransform.User2UserEntity()).get();
+		boolean success = this.persistencew.insertPersistenceObjects(entity);
+		logger.debug(entity);
+		return  user;
 		
 	}
 	
