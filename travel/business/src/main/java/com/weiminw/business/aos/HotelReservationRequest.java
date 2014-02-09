@@ -25,16 +25,16 @@ import com.weiminw.travel.interfaces.IUser;
 public class HotelReservationRequest implements IReservationRequest{
 	private final static Logger logger = LogManager.getLogger(HotelReservationRequest.class);
 	private String message = "预定一间大床房,价格200~300之间";
-	private IUser from;
-	private IUser to;
+	private IUser sender;
+	private IUser receiver;
 	private NotifyMessageSendWorker work = NotifyMessageSendWorker.create();
-	private HotelReservationRequest(IUser from, IUser to) {
-		this.from = from;
-		this.to = to;
+	private HotelReservationRequest(IUser sender, IUser receiver) {
+		this.sender = sender;
+		this.receiver = receiver;
 	}
 
-	public static IReservationRequest create(IUser from, IUser to) {
-		return new HotelReservationRequest(from,to);
+	public static IReservationRequest create(IUser sender, IUser receiver) {
+		return new HotelReservationRequest(sender,receiver);
 	}
 
 	@Override
@@ -44,6 +44,18 @@ public class HotelReservationRequest implements IReservationRequest{
 	public static void main(String[] args) {
 		IReservationRequest request = HotelReservationRequest.create(IUser.NONE, IUser.NONE);
 		request.send();
+	}
+
+	@Override
+	public IUser getReceiver() {
+		// TODO Auto-generated method stub
+		return this.receiver;
+	}
+
+	@Override
+	public IUser getSender() {
+		// TODO Auto-generated method stub
+		return this.sender;
 	}
 
 }

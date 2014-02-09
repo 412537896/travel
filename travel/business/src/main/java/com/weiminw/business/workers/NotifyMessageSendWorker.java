@@ -24,11 +24,12 @@ public final class NotifyMessageSendWorker {
 		private static final ChannelKeyPair pair = new ChannelKeyPair(apiKey, secretKey);
 		private static final BaiduChannelClient channelClient = new BaiduChannelClient(pair);
 		private final PushUnicastMessageRequest request;
-		public MessagePush(String baiduPushUerId,String baiduPushChannelId,String message) {
+		public MessagePush(String baiduPushUerId,long baiduPushChannelId,String message) {
 			request = new PushUnicastMessageRequest();
 			request.setDeviceType(3);	// device_type => 1: web 2: pc 3:android 4:ios 5:wp		
-			request.setChannelId(4058350679356722667L);	
-			request.setUserId("985394512283407098");	
+			request.setChannelId(baiduPushChannelId);	
+			request.setUserId(baiduPushUerId);
+			request.setMessageType(1);
 			request.setMessage(message);
 			
 		}
@@ -40,7 +41,6 @@ public final class NotifyMessageSendWorker {
 		}
 	}
 	public static void execute(Callable<String> callable) {
-		// TODO Auto-generated method stub
 		executor.submit(callable);
 	}
 	
@@ -48,7 +48,7 @@ public final class NotifyMessageSendWorker {
 		return new NotifyMessageSendWorker();
 	}
 	public boolean send(IReservationRequest request){
-		MessagePush push = new MessagePush("985394512283407098","4058350679356722667","预定一间大床房,价格200~300之间");
+		MessagePush push = new MessagePush(request.getReceiver().getCloudPushUk(),Long.valueOf(request.getReceiver().getCloudPushCk()),"预定一间大床房,价格200~300之间");
 		executor.submit(push);
 		return false;
 	}
