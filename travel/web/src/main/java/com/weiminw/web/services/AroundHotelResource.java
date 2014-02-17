@@ -15,15 +15,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.gson.Gson;
-import com.weiminw.business.managers.HotelManager;
-import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IHotelLocation;
+import com.weiminw.business.spatial.HotelSpatial;
+import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.travel.interfaces.daos.IHotel;
+import com.weiminw.travel.interfaces.daos.IHotelLocation;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 @Path("/around/hotels/")
 public class AroundHotelResource {
 	private static final Gson gson = new Gson();
-	private static final IHotelManager hotelManager = HotelManager.create();
+	private static final HotelManager hotelDAO = HotelManager.create();
 	private static final Logger logger = LogManager.getLogger(AroundHotelResource.class);
 	@Context
 	UriInfo uriInfo;
@@ -32,7 +33,7 @@ public class AroundHotelResource {
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
 	public String getHotels(@QueryParam("lnt") double lnt,@QueryParam("lat") double lat,@QueryParam("start") int start){
 		logger.error(uriInfo.getPath());
-		List<IHotelLocation> hotels = hotelManager.getHotelsByLntLat(lnt,lat,0);
+		List<IHotelLocation> hotels = hotelDAO.getHotelLocation(lnt,lat,5,start,50);
 		return gson.toJson(hotels);
 	}
 }

@@ -17,10 +17,10 @@ import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
-import com.weiminw.business.managers.HotelManager;
-import com.weiminw.travel.interfaces.IHotel;
+import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.travel.dao.impls.pos.HotelEntity;
+import com.weiminw.travel.interfaces.daos.IHotel;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
-import com.weiminw.travel.persistence.impls.pos.HotelEntity;
 
 public class CorrectLntLat {
 	public class ResultWrapper {

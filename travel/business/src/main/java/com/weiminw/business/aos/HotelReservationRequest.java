@@ -11,6 +11,8 @@ import java.util.concurrent.Callable;
 
 
 
+
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,8 +21,8 @@ import com.baidu.yun.channel.client.BaiduChannelClient;
 import com.baidu.yun.channel.model.PushUnicastMessageRequest;
 import com.baidu.yun.channel.model.PushUnicastMessageResponse;
 import com.weiminw.business.workers.NotifyMessageSendWorker;
-import com.weiminw.travel.interfaces.IReservationRequest;
-import com.weiminw.travel.interfaces.IUser;
+import com.weiminw.travel.interfaces.daos.IReservationRequest;
+import com.weiminw.travel.interfaces.daos.IUser;
 
 public class HotelReservationRequest implements IReservationRequest{
 	private final static Logger logger = LogManager.getLogger(HotelReservationRequest.class);

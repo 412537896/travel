@@ -10,11 +10,18 @@ import javax.servlet.ServletContextListener;
 
 
 
+
+
+
+
+
+
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.weiminw.business.managers.HotelManager;
 import com.weiminw.business.spatial.HotelSpatial;
+import com.weiminw.travel.dao.impls.HotelManager;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 /**
@@ -35,7 +42,8 @@ public final class HotelApplicationContextListener implements ServletContextList
      * @see ServletContextListener#contextInitialized(ServletContextEvent)
      */
     public void contextInitialized(ServletContextEvent event) {
-    	HotelSpatial.initIndex();
+    	HotelManager dao = HotelManager.create();
+    	HotelSpatial.initIndex(dao.getHotels());
     }
 
 	/**

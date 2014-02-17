@@ -11,7 +11,7 @@ import com.baidu.yun.channel.auth.ChannelKeyPair;
 import com.baidu.yun.channel.client.BaiduChannelClient;
 import com.baidu.yun.channel.model.PushUnicastMessageRequest;
 import com.baidu.yun.channel.model.PushUnicastMessageResponse;
-import com.weiminw.travel.interfaces.IReservationRequest;
+import com.weiminw.travel.interfaces.daos.IReservationRequest;
 
 
 

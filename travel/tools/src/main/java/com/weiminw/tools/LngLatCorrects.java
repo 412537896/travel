@@ -22,13 +22,11 @@ import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.weiminw.business.aos.Hotel;
-import com.weiminw.business.aos.Location;
-import com.weiminw.business.managers.GeoManager;
-import com.weiminw.business.managers.HotelManager;
-import com.weiminw.travel.interfaces.IHotel;
+import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.travel.dao.impls.pos.HotelEntity;
+import com.weiminw.travel.dao.impls.pos.HotelLocationEntity;
+import com.weiminw.travel.interfaces.daos.IHotel;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
-import com.weiminw.travel.persistence.impls.pos.HotelEntity;
-import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
 
 /**
  * 根据酒店名获取百度的经纬度，并存储
@@ -43,7 +41,7 @@ public class LngLatCorrects {
 		private static final String ak = "vnWOlOtrAtGQYENrRmwr0KjK";
 		private final IHotel hotel;
 		private static final Gson gson = new Gson();
-		private static final GeoManager geoManager = new GeoManager();
+		private static final HotelManager geoManager = new HotelManager();
 		public BaiduGeoHelper(IHotel hotel) {
 			this.hotel = hotel;
 		}
@@ -77,7 +75,7 @@ public class LngLatCorrects {
 			try{
 				double confidence = 0.0;
 				Map map = null;
-				Map map1 = this.result(this.hotel.getAddress().getDetail());
+				Map map1 = this.result(this.hotel.getAddress());
 				Map map2 = this.result(this.hotel.getName());
 				if(map1!=null){
 					double tmp = (Double) ((Map)map1.get("result")).get("confidence");
@@ -103,7 +101,8 @@ public class LngLatCorrects {
 							double lng = (double) location.get("lng");
 							double lat = (double) location.get("lat");
 							System.out.println(map);
-							return Hotel.builder(hotel).location(Location.of(lng, lat)).build();
+							IHotel newhotel = hotel.setLongitude(lng).setLatitude(lat);
+							return newhotel;
 						}
 						else {
 							System.err.println(this.hotel);
@@ -122,7 +121,7 @@ public class LngLatCorrects {
 				uriBuilder.addParameter("output", this.output)
 				.addParameter("ak", this.ak)
 				.addParameter("address", address)
-				.addParameter("city", hotel.getAddress().getCity());
+				.addParameter("city", hotel.getCityName());
 			return uriBuilder.build();
 		}
 		
@@ -142,7 +141,7 @@ public class LngLatCorrects {
 		for(int i = 10000 ;i<10001;i ++) {
 			IHotel hotel = manager.getHotelById(Long.valueOf(ids.get(i)));
 			
-			if(hotel!=IHotel.NULL){
+			if(hotel!=IHotel.NONE){
 				hotel = new BaiduGeoHelper(hotel).get();
 				if(hotel != null)
 					manager.updateHotel(hotel);

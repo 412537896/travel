@@ -2,93 +2,118 @@ package com.weiminw.business.aos;
 
 import java.io.Serializable;
 
-import com.google.common.base.Function;
-import com.google.common.base.Objects;
-import com.weiminw.travel.interfaces.IAddress;
-import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.ILocation;
-import com.weiminw.travel.persistence.impls.pos.HotelEntity;
-import com.weiminw.travel.utils.LntLatCaculator;
+import com.weiminw.travel.interfaces.daos.IHotel;
+
 
 public class Hotel implements IHotel,Serializable {
+
+	private final long id;
+	private final String name;
+	private final String description;
+	private final int province;
+	private final int city;
+	private final String address;
+	private final double latitude;
+	private final double longitude;
+	private final String telephone;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5713403096635565244L;
-	private final long id;
-	private final String name;
-	private final String telephone;
-	private final String description;
-	private final IAddress address;
-	private final ILocation location;
+	
+	
+	
 
-	
-	public static final class Builder {
-		private final long id;
-		private String name;
-		private String telephone;
-		private String description;
-		private IAddress address;
-		private ILocation location;
-		
-		public IHotel build(){
-			return new Hotel(this);
-		}
-		
-		public Builder(long id){
-			this.id = id;
-		}
-		public Builder name(String name){
-			this.name = name;
-			return this;
-		}
-		public Builder address(IAddress address){
-			this.address = address;
-			return this;
-		}
-		public Builder location(ILocation location){
-			this.location = location;
-			return this;
-		}
-		
-		public Builder telephone(String telephone){
-			this.telephone = telephone;
-			return this;
-		}
-		public Builder description(String description){
-			this.description = description;
-			return this;
-		}
-		
+	private Hotel(long id, String name, String description, int province,
+			int city, String address, double latitude, double longitude,
+			String telephone) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.province = province;
+		this.city = city;
+		this.address = address;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.telephone = telephone;
 	}
+	
+	public static IHotel of(long id, String name, String description, int province,
+			int city, String address, double latitude, double longitude,
+			String telephone){
+		return new Hotel(id, name, description, province, city, address, latitude, longitude, telephone);
+	}
+	
 
-	public static Builder builder(long id){
-		return new Builder(id);
-	}
-	public static Builder builder(IHotel hotel){
-		Builder builder = builder(hotel.getId());
-		builder.address(hotel.getAddress())
-			.description(hotel.getDescription())
-			.name(hotel.getName())
-			.telephone(hotel.getTelephone())
-			.location(hotel.getLocation());
-		return builder;
-	}
-	
-	private Hotel(Builder builder){
-		this.id = builder.id;
-		this.name = builder.name;
-		this.telephone = builder.telephone;
-		this.description = builder.description;
-		this.address = builder.address;
-		this.location = builder.location;
-		
-	}
-	
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
 		return this.id;
+	}
+
+	@Override
+	public IHotel setId(long id) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public String getAddress() {
+		return this.address;
+	}
+
+	@Override
+	public IHotel setAddress(String address) {
+		return Hotel.of(id, address, address, province, city, address, latitude, longitude, address);
+	}
+
+	@Override
+	public int getCity() {
+		return this.city;
+	}
+
+	@Override
+	public IHotel setCity(int city) {
+		return Hotel.of(city, name, description, city, city, address, city, city, telephone);
+	}
+
+	@Override
+	public String getCityName() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	@Override
+	public String getDescription() {
+		// TODO Auto-generated method stub
+		return this.description;
+	}
+
+	@Override
+	public IHotel setDescription(String description) {
+		return Hotel.of(id, description, description, province, city, description, latitude, longitude, description);
+	}
+
+	@Override
+	public double getLatitude() {
+		return this.latitude;
+	}
+
+	@Override
+	public IHotel setLatitude(double latitude) {
+		// TODO Auto-generated method stub
+		return Hotel.of(id, name, description, province, city, address, latitude, latitude, telephone);
+	}
+
+	@Override
+	public double getLongitude() {
+		// TODO Auto-generated method stub
+		return this.longitude;
+	}
+
+	@Override
+	public IHotel setLongitude(double longitude) {
+		// TODO Auto-generated method stub
+		return Hotel.of(id, name, description, province, city, address, longitude, longitude, telephone);
 	}
 
 	@Override
@@ -98,38 +123,60 @@ public class Hotel implements IHotel,Serializable {
 	}
 
 	@Override
+	public IHotel setName(String name) {
+		// TODO Auto-generated method stub
+		return Hotel.of(id, name, name, province, city, name, latitude, longitude, name);
+	}
+
+
+	@Override
+	public int getProvince() {
+		// TODO Auto-generated method stub
+		return this.province;
+	}
+
+	@Override
+	public IHotel setProvince(int province) {
+		// TODO Auto-generated method stub
+		return Hotel.of(province, name, description, province, province, address, province, province, telephone);
+	}
+
+	@Override
+	public String getProvinceName() {
+		// TODO Auto-generated method stub
+		return "";
+	}
+
+	@Override
 	public String getTelephone() {
 		// TODO Auto-generated method stub
 		return this.telephone;
 	}
 
 	@Override
-	public String getDescription() {
+	public IHotel setTelephone(String telephone) {
 		// TODO Auto-generated method stub
-		return this.description;
+		return Hotel.of(id, telephone, telephone, province, city, telephone, latitude, longitude, telephone);
+	}
+	
+	@Override
+	public String toString() {
+		return "Hotel [id=" + id + ", name=" + name + ", description="
+				+ description + ", province=" + province + ", city=" + city
+				+ ", address=" + address + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", telephone=" + telephone + "]";
 	}
 
+	public static void main(String[] args) {
+		IHotel hotel = Hotel.of(1, "1", "1", 1, 1, "1", 1, 1, "1");
+		IHotel hotel2 = hotel.setAddress("2");
+		System.out.println(hotel);
+		System.out.println(hotel2);
+	}
+
+
+
 	
-	public String toString(){
-		return Objects.toStringHelper(this)
-				.add("id",this.getId())
-				.add("name", this.getName())
-				.add("description", this.getDescription())
-				.add("address", this.getAddress())
-				.add("location", this.getLocation())
-				.add("telephone", this.getTelephone())
-				.toString();
-	}
-	@Override
-	public IAddress getAddress() {
-		// TODO Auto-generated method stub
-		return this.address;
-	}
-	@Override
-	public ILocation getLocation() {
-		// TODO Auto-generated method stub
-		return this.location;
-	}
 	
 	
 

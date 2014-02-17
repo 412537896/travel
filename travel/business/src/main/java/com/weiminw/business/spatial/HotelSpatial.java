@@ -2,34 +2,28 @@ package com.weiminw.business.spatial;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.DoubleField;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.IntField;
 import org.apache.lucene.document.LongField;
-import org.apache.lucene.document.StoredField;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.queries.function.ValueSource;
 import org.apache.lucene.search.Filter;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.Sort;
-import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.spatial.prefix.PrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.RecursivePrefixTreeStrategy;
 import org.apache.lucene.spatial.prefix.tree.GeohashPrefixTree;
 import org.apache.lucene.spatial.prefix.tree.SpatialPrefixTree;
-import org.apache.lucene.spatial.prefix.tree.SpatialPrefixTreeFactory;
 import org.apache.lucene.spatial.query.SpatialArgs;
 import org.apache.lucene.spatial.query.SpatialOperation;
 import org.apache.lucene.store.RAMDirectory;
@@ -37,17 +31,10 @@ import org.apache.lucene.util.Version;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Point;
-import com.spatial4j.core.shape.Shape;
-import com.weiminw.business.managers.HotelManager;
-import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.managers.IHotelManager;
-import com.weiminw.travel.persistence.IPersistence;
-import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelSpatialEntity;
+import com.weiminw.travel.interfaces.daos.IHotelLocation;
 
 
 public class HotelSpatial {
@@ -59,13 +46,13 @@ public class HotelSpatial {
 	private static final SpatialPrefixTree grid;
 	private static final PrefixTreeStrategy strategy;
 	private static final int MAX_TOP = 3000;
-	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
+//	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
 	static {
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");
 	}
 	
-	private static Document createHotelLntLatPoint(HotelSpatialEntity hotel) {
+	private static Document createHotelLntLatPoint(IHotelLocation hotel) {
 	    Document doc = new Document();
 	    doc.add(new LongField("id", hotel.getId(), Field.Store.YES));
 	    Point shape = SpatialContext.GEO.makePoint(hotel.getLongitude(), hotel.getLatitude());
@@ -110,7 +97,7 @@ public class HotelSpatial {
 	}
 	
 	public static void main(String[] args) throws IOException {
-		HotelSpatial.initIndex();
+//		HotelSpatial.initIndex();
 		List<Long> ids = HotelSpatial.search(116.406887,39.98207, 5);
 		System.out.println(ids.toString());
 	}
@@ -118,10 +105,10 @@ public class HotelSpatial {
 	/**
 	 * ³õÊ¼»¯Ë÷Òý
 	 */
-	public static void initIndex(){
+	public static void initIndex(List<IHotelLocation> hotelLocations){
 		try {
 	    	IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(Version.LUCENE_46,null));
-	    	for(HotelSpatialEntity hotel:persistence.getPersistenceObjects("HotelSpatialEntity.findAll")){
+	    	for(IHotelLocation hotel:hotelLocations){
 	    		indexWriter.addDocument(createHotelLntLatPoint(hotel));
 	    	}
 

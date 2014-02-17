@@ -8,13 +8,13 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import com.weiminw.business.aos.Seller;
-import com.weiminw.business.managers.UserManager;
-import com.weiminw.travel.interfaces.IUser;
+import com.weiminw.travel.dao.impls.AccountManager;
+import com.weiminw.travel.interfaces.daos.IUser;
 import com.weiminw.travel.interfaces.managers.IUserManager;
 
 @Path("/sellers")
 public class SellerResource {
-	IUserManager manager = UserManager.create();
+	AccountManager manager = AccountManager.create();
 	@Context
 	UriInfo uriInfo;
 	@POST
@@ -24,20 +24,20 @@ public class SellerResource {
 			@FormParam(value="cloudPushUk") String cloudPushUk,
 			@FormParam(value="cloudPushTag") String cloudPushTag,
 			@FormParam(value="fixTelephone") String fixTelephone){
-		IUser user = Seller.builder()
-				.setName(name)
-				.setCellPhone(cellPhone)
-				.setCloudPushCk(cloudPushCk)
-				.setCloudPushTag(cloudPushTag)
-				.setCloudPushUk(cloudPushUk)
-				.setFixTelephone(fixTelephone)
-				.setName(name).build();
-		user = manager.addSeller(user);
-		if(user!=null){
-			return Response.created(uriInfo.getRequestUri().resolve(String.valueOf(user.getId()))).build();
-		}
-		else {
+//		IUser user = Seller.builder()
+//				.setName(name)
+//				.setCellPhone(cellPhone)
+//				.setCloudPushCk(cloudPushCk)
+//				.setCloudPushTag(cloudPushTag)
+//				.setCloudPushUk(cloudPushUk)
+//				.setFixTelephone(fixTelephone)
+//				.setName(name).build();
+//		user = manager.addSeller(user);
+//		if(user!=null){
+//			return Response.created(uriInfo.getRequestUri().resolve(String.valueOf(user.getId()))).build();
+//		}
+//		else {
 			return Response.serverError().build();
-		}
+//		}
 	}
 }

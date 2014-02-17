@@ -3,7 +3,6 @@ package com.weiminw.web.services;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -16,26 +15,15 @@ import javax.ws.rs.core.Response.Status;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import com.weiminw.business.managers.HotelManager;
-import com.weiminw.travel.interfaces.ICity;
-import com.weiminw.travel.interfaces.IHotel;
-import com.weiminw.travel.interfaces.IProvince;
+import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.travel.interfaces.daos.IHotel;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
-import com.weiminw.travel.persistence.impls.MySqlPersistence;
-import com.weiminw.travel.persistence.impls.pos.HotelEntity;
-import com.weiminw.web.services.json.CityJsonAdapter;
-import com.weiminw.web.services.json.ProvinceJsonAdapter;
 @Path("hotels")
 public class HotelResource {
 	private static final Gson gson = new GsonBuilder()
-										.registerTypeAdapter(ICity.class, CityJsonAdapter.newInstance())
-										.registerTypeAdapter(IProvince.class, ProvinceJsonAdapter.newInstance())
 										.create();
 	
-	IHotelManager hotelManager = HotelManager.create();
+	HotelManager hotelDAO = HotelManager.create();
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
@@ -48,8 +36,8 @@ public class HotelResource {
 	@Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
 	public String getHotel(@PathParam("id") long id) {
-		IHotel hotelPO = hotelManager.getHotelById(id);
-		return gson.toJson(hotelPO);
+		IHotel hotel = hotelDAO.getHotelById(id);
+		return gson.toJson(hotel);
     }
 	
 	
