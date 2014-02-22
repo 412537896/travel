@@ -22,7 +22,10 @@ public class HotelBidingEntity implements Serializable, IHotelBiding {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long id;
-
+	
+	@Column(name="user_id")
+	private long userId;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="check_in")
 	private Date checkIn;
@@ -50,7 +53,28 @@ public class HotelBidingEntity implements Serializable, IHotelBiding {
 	private byte status;
 
 	public HotelBidingEntity() {
+		
 	}
+	
+	
+
+	public HotelBidingEntity(long id, long userId,Date checkIn, Date checkOut,
+			Date expireTime, double highPrice, double lowPrice, int roomNum,
+			byte sendPhone, byte status) {
+		super();
+		this.id = id;
+		this.userId = userId;
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.expireTime = expireTime;
+		this.highPrice = highPrice;
+		this.lowPrice = lowPrice;
+		this.roomNum = roomNum;
+		this.sendPhone = sendPhone;
+		this.status = status;
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see com.weiminw.travel.persistence.impls.pos.IHotelBiding#getId()
@@ -68,6 +92,19 @@ public class HotelBidingEntity implements Serializable, IHotelBiding {
 		this.id = id;
 		return this;
 	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+
+
+	public IHotelBiding setUserId(long userId) {
+		this.userId = userId;
+		return this;
+	}
+
+
 
 	/* (non-Javadoc)
 	 * @see com.weiminw.travel.persistence.impls.pos.IHotelBiding#getCheckIn()

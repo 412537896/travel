@@ -34,7 +34,9 @@ import com.google.common.collect.Lists;
 import com.spatial4j.core.context.SpatialContext;
 import com.spatial4j.core.distance.DistanceUtils;
 import com.spatial4j.core.shape.Point;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.daos.IHotelLocation;
+import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 
 public class HotelSpatial {
@@ -46,7 +48,6 @@ public class HotelSpatial {
 	private static final SpatialPrefixTree grid;
 	private static final PrefixTreeStrategy strategy;
 	private static final int MAX_TOP = 3000;
-//	private static final IPersistence<HotelSpatialEntity> persistence = MySqlPersistence.create();
 	static {
 		grid = new GeohashPrefixTree(SpatialContext.GEO, 11);
 		strategy = new RecursivePrefixTreeStrategy(grid, "myGeoField");

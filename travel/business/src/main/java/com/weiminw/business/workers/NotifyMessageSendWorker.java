@@ -11,7 +11,6 @@ import com.baidu.yun.channel.auth.ChannelKeyPair;
 import com.baidu.yun.channel.client.BaiduChannelClient;
 import com.baidu.yun.channel.model.PushUnicastMessageRequest;
 import com.baidu.yun.channel.model.PushUnicastMessageResponse;
-import com.weiminw.travel.interfaces.daos.IReservationRequest;
 
 
 
@@ -47,10 +46,10 @@ public final class NotifyMessageSendWorker {
 	public static NotifyMessageSendWorker create(){
 		return new NotifyMessageSendWorker();
 	}
-	public boolean send(IReservationRequest request){
-		MessagePush push = new MessagePush(request.getReceiver().getCloudPushUk(),Long.valueOf(request.getReceiver().getCloudPushCk()),"预定一间大床房,价格200~300之间");
-		executor.submit(push);
-		return false;
-	}
+//	public boolean send(IReservationRequest request){
+//		MessagePush push = new MessagePush(request.getReceiver().getCloudPushUk(),Long.valueOf(request.getReceiver().getCloudPushCk()),"预定一间大床房,价格200~300之间");
+//		executor.submit(push);
+//		return false;
+//	}
 
 }

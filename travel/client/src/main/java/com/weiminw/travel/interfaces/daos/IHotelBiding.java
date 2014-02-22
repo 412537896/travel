@@ -7,6 +7,10 @@ public interface IHotelBiding {
 	public abstract long getId();
 
 	public abstract IHotelBiding setId(long id);
+	
+	public abstract long getUserId();
+	
+	public abstract IHotelBiding setUserId(long userId);
 
 	public abstract Date getCheckIn();
 

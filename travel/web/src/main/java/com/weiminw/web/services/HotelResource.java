@@ -13,18 +13,18 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.weiminw.travel.dao.impls.HotelManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.interfaces.daos.IHotel;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
+import com.weiminw.web.services.json.JsonConverter;
 @Path("hotels")
 public class HotelResource {
-	private static final Gson gson = new GsonBuilder()
-										.create();
 	
-	HotelManager hotelDAO = HotelManager.create();
-	
+	private IHotelManager hotelManager = HotelManager.create();
+	private Logger logger = LogManager.getLogger(HotelResource.class);
 	@GET
 	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
     public Response getHotels() {
@@ -32,18 +32,18 @@ public class HotelResource {
     }
 	@GET
 	@Path("/{id}")
-
-	@Consumes(MediaType.APPLICATION_JSON+";charset=utf-8")
-	@Produces(MediaType.APPLICATION_JSON+";charset=utf-8")
-	public String getHotel(@PathParam("id") long id) {
-		IHotel hotel = hotelDAO.getHotelById(id);
-		return gson.toJson(hotel);
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getHotel(@PathParam("id") long id) {
+		
+		IHotel hotel = hotelManager.getHotelById(id);
+		logger.debug(hotel);
+		return Response.ok(JsonConverter.convertToJson(hotel)).build();
     }
 	
 	
 	@GET
 	@Path("/{id}")
-	@Consumes("image/*")
 	@Produces("image/*")
 	public Response getHotel2(@PathParam("id") long id) throws URISyntaxException {
 		return Response.temporaryRedirect(new URI("/travel/pictures/10000442_1.png")).build();

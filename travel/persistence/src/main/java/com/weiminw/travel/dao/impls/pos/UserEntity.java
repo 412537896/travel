@@ -15,10 +15,12 @@ import com.weiminw.travel.interfaces.daos.IUser;
 @Table(name="user")
 @NamedQueries(value = { 
 		@NamedQuery(name="UserEntity.findAll", query="SELECT u FROM UserEntity u"),
-
+		@NamedQuery(name="UserEntity.findAllByName", query="SELECT u FROM UserEntity u where u.name = :name"),
 })
-public class UserEntity implements Serializable {
+public class UserEntity implements Serializable,IUser {
 	private static final long serialVersionUID = 1L;
+
+	public static String QUERY_BY_NAME = "UserEntity.findAllByName";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -77,64 +79,73 @@ public class UserEntity implements Serializable {
 		return this.id;
 	}
 
-	public void setId(long id) {
+	public IUser setId(long id) {
 		this.id = id;
+		return this;
+	
 	}
 
 	public String getCellPhone() {
 		return this.cellPhone;
 	}
 
-	public void setCellPhone(String cellPhone) {
+	public IUser setCellPhone(String cellPhone) {
 		this.cellPhone = cellPhone;
+		return this;
 	}
 
 	public String getCloudPushCk() {
 		return this.cloudPushCk;
 	}
 
-	public void setCloudPushCk(String cloudPushCk) {
+	public IUser setCloudPushCk(String cloudPushCk) {
 		this.cloudPushCk = cloudPushCk;
+		return this;
 	}
 
 	public String getCloudPushTag() {
 		return this.cloudPushTag;
 	}
 
-	public void setCloudPushTag(String cloudPushTag) {
+	public IUser setCloudPushTag(String cloudPushTag) {
 		this.cloudPushTag = cloudPushTag;
+		return this;
 	}
 
 	public String getCloudPushUk() {
 		return this.cloudPushUk;
 	}
 
-	public void setCloudPushUk(String cloudPushUk) {
+	public IUser setCloudPushUk(String cloudPushUk) {
 		this.cloudPushUk = cloudPushUk;
+		return this;
 	}
 
 	public String getName() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public IUser setName(String name) {
 		this.name = name;
+		return this;
 	}
 
 	public String getNick() {
 		return this.nick;
 	}
 
-	public void setNick(String nick) {
+	public IUser setNick(String nick) {
 		this.nick = nick;
+		return this;
 	}
 
 	public String getPassword() {
 		return this.password;
 	}
 
-	public void setPassword(String password) {
+	public IUser setPassword(String password) {
 		this.password = password;
+		return this;
 	}
 
 }

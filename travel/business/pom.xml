@@ -34,5 +34,10 @@
   		<artifactId>baidu-push</artifactId>
   		<version>1.0.0-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.weiminw.travel</groupId>
+  		<artifactId>persistence</artifactId>
+  		<version>1.0.0-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

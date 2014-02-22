@@ -16,8 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.google.common.collect.Maps;
-import com.google.gson.Gson;
-import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.dao.impls.pos.HotelEntity;
 import com.weiminw.travel.interfaces.daos.IHotel;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
@@ -75,14 +74,15 @@ public class CorrectLntLat {
 		HttpResponse response = httpclient.execute(getMethod);
 		String responseString = EntityUtils.toString(response.getEntity(), "GBK");
 		System.out.println(responseString);
-		Gson gson = new Gson();
-		Map<String,Object> result = gson.fromJson(responseString,ResultWrapper.class).result;
-		
-		if (result == null||result.isEmpty()){
-			return null;
-		}
-		Map<String,Double> lntlat = (Map<String,Double>)gson.fromJson(responseString,ResultWrapper.class).result.get("location");
-		return lntlat;
+//		Gson gson = new Gson();
+//		Map<String,Object> result = gson.fromJson(responseString,ResultWrapper.class).result;
+//		
+//		if (result == null||result.isEmpty()){
+//			return null;
+//		}
+//		Map<String,Double> lntlat = (Map<String,Double>)gson.fromJson(responseString,ResultWrapper.class).result.get("location");
+//		return lntlat;
+		return null;
 	}
 
 }

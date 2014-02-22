@@ -22,7 +22,7 @@ import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import com.google.gson.Gson;
 import com.weiminw.business.aos.Hotel;
-import com.weiminw.travel.dao.impls.HotelManager;
+import com.weiminw.business.managers.HotelManager;
 import com.weiminw.travel.dao.impls.pos.HotelEntity;
 import com.weiminw.travel.dao.impls.pos.HotelLocationEntity;
 import com.weiminw.travel.interfaces.daos.IHotel;

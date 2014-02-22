@@ -1,4 +1,4 @@
-package com.weiminw.travel.dao.impls;
+package com.weiminw.business.managers;
 
 import java.util.List;
 
@@ -10,6 +10,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Lists;
 import com.weiminw.business.spatial.HotelSpatial;
+import com.weiminw.travel.dao.impls.MySqlPersistence;
 import com.weiminw.travel.dao.impls.pos.HotelEntity;
 import com.weiminw.travel.dao.impls.pos.HotelLocationEntity;
 import com.weiminw.travel.dao.utils.HotelEntityTrans;
@@ -18,8 +19,8 @@ import com.weiminw.travel.interfaces.daos.IHotelLocation;
 import com.weiminw.travel.interfaces.managers.IHotelManager;
 
 public class HotelManager implements IHotelManager{
-	private final static MySqlPersistence<HotelEntity> persistence4HotelEntity = MySqlPersistence.create();
-	private final static MySqlPersistence<HotelLocationEntity> persistence4HotelLocationEntity = MySqlPersistence.create();
+	private final static MySqlPersistence<IHotel> persistence4HotelEntity = MySqlPersistence.create();
+	private final static MySqlPersistence<IHotelLocation> persistence4HotelLocationEntity = MySqlPersistence.create();
 	private final static Logger logger = LogManager.getLogger(HotelManager.class);
 	private final static HotelManager manager = new HotelManager();
 	
@@ -32,8 +33,8 @@ public class HotelManager implements IHotelManager{
 	 */
 	public IHotel getHotelById(long id) {
 		Preconditions.checkArgument(id>0);
-		HotelEntity entity = persistence4HotelEntity.getPersistenceObject(HotelEntity.class, id);
-		IHotel hotel = Optional.fromNullable(entity).transform(HotelEntityTrans.getHotelEntity2IHotelFunc()).or(IHotel.NONE);
+		IHotel hotel = persistence4HotelEntity.getPersistenceObject(HotelEntity.class, id);
+//		IHotel hotel = Optional.fromNullable(entity).transform(HotelEntityTrans.getHotelEntity2IHotelFunc()).or(IHotel.NONE);
 		return hotel;
 	}
 	
@@ -43,9 +44,8 @@ public class HotelManager implements IHotelManager{
 	 * @return
 	 */
 	public IHotelLocation getHotelLocationInfoById(long id){
-		Preconditions.checkArgument(id>0);
-		HotelLocationEntity entity = persistence4HotelLocationEntity.getPersistenceObject(HotelLocationEntity.class, id);
-		IHotelLocation hotelLocation = Optional.fromNullable(entity).transform(HotelEntityTrans.getHotelLocationEntity2IHotelLocationFunc()).or(IHotelLocation.NONE);
+		Preconditions.checkArgument(id >0);
+		IHotelLocation hotelLocation = persistence4HotelLocationEntity.getPersistenceObject(HotelLocationEntity.class, id);
 		return hotelLocation;
 	}
 	
@@ -53,8 +53,8 @@ public class HotelManager implements IHotelManager{
 	 * 获取全部酒店
 	 */
 	public List<IHotelLocation> getHotels() {
-		List<HotelLocationEntity> hotelEntities = persistence4HotelLocationEntity.getPersistenceObjects("HotelLocationEntity.findAll");
-		return FluentIterable.from(hotelEntities).transform(HotelEntityTrans.getHotelLocationEntity2IHotelLocationFunc()).toList();
+		List<IHotelLocation> hotelLocations = persistence4HotelLocationEntity.getPersistenceObjects("HotelLocationEntity.findAll");
+		return hotelLocations;
 	}
 	/**
 	 * 创建HotelManager实例
@@ -69,9 +69,10 @@ public class HotelManager implements IHotelManager{
 	 * 更新酒店数据
 	 */
 	public boolean updateHotel(IHotel hotel) {
-		Preconditions.checkNotNull(hotel);
-		HotelEntity entity = Optional.of(hotel).transform(HotelEntityTrans.geIHotel2HotelEntityFunc()).get();
-		return persistence4HotelEntity.updatePersistenceObject(entity);
+//		Preconditions.checkNotNull(hotel);
+//		HotelEntity entity = Optional.of(hotel).transform(HotelEntityTrans.geIHotel2HotelEntityFunc()).get();
+//		return persistence4HotelEntity.updatePersistenceObject(entity);
+		return false;
 	}
 
 	/**

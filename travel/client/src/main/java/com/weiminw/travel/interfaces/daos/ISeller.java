@@ -28,7 +28,7 @@ public interface ISeller {
 
 	public long getHid();
 
-	public ISeller setHid(int hid);
+	public ISeller setHid(long hid);
 
 	public String getIdentify();
 
